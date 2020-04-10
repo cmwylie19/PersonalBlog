@@ -3,7 +3,7 @@ module.exports = {
     title: `TECH BLOG`,
     author: {
       name: `Casey Wylie`,
-      summary: `Software Engineer striving to build solutions that are more than mediocre`,
+      summary: `Software Engineer striving to be more than mediocre and never stop learning`,
     },
     description: `A collection of lessons and techniques learned in the field intended to be remembered and learned from and hopefully be of some help to others.`,
     siteUrl: `http://cmwylie19.github.io/`,
