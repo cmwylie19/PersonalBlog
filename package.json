@@ -33,7 +33,12 @@
     "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "babel-jest": "^25.3.0",
+    "babel-preset-gatsby": "^0.3.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^25.3.0",
+    "prettier": "^1.19.1",
+    "react-test-renderer": "^16.13.1"
   },
   "homepage": "https://cmwylie19.github.io",
   "keywords": [
@@ -52,6 +57,6 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "jest --coverage --silent && exit 1"
   }
 }
