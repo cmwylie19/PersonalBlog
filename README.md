@@ -1,4 +1,4 @@
-# BligBlogger ![Greetings](https://github.com/cmwylie19/BligBlogger/workflows/Greetings/badge.svg)
+# BligBlogger ![Node.js CI](https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg)
 
 README.md 
 # Keycloak Setup for Authentication
