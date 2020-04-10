@@ -59,6 +59,6 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "test": "jest --coverage --silent && exit 1"
+    "test": "jest --coverage --silent"
   }
 }
