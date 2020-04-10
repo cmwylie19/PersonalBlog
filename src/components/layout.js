@@ -31,7 +31,7 @@ const Layout = ({ location, title, children }) => {
     header = (
       <h3
         style={{
-          fontFamily: `Montserrat, sans-serif`,
+          fontFamily: `Red Hat Display, sans-serif`,
           marginTop: 0,
         }}
       >
@@ -58,10 +58,14 @@ const Layout = ({ location, title, children }) => {
     >
       <header>{header}</header>
       <main>{children}</main>
-      <footer>
-        © {new Date().getFullYear()}, Built with
+      <footer
+        style={{
+          fontFamily: `Red Hat Text, sans-serif`
+        }}
+      >
+        © {new Date().getFullYear()}, Built by
         {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <a target="_blank" rel="noopener noreferrer" href="mailto:casewylie@gmail.com?subject=blog">Casey</a>
       </footer>
     </div>
   )

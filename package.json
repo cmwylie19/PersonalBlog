@@ -1,12 +1,9 @@
 {
-  "name": "gatsby-starter-blog",
+  "name": "BligBlogger",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
+  "description": "Personal blog based on field experiences",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
-  },
+  "author": "Case Wylie <casewylie@gmail.com>",
   "dependencies": {
     "gatsby": "^2.20.12",
     "gatsby-image": "^2.3.1",
@@ -38,7 +35,7 @@
   "devDependencies": {
     "prettier": "^1.19.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "homepage": "https://cmwylie19.github.io",
   "keywords": [
     "gatsby"
   ],
@@ -46,7 +43,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git@github.com:cmwylie19/BligBlogger.git"
   },
   "scripts": {
     "build": "gatsby build",

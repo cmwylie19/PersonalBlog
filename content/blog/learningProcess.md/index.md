@@ -20,3 +20,7 @@ for improvement and why. The key to the success of this methodology is focus ove
 durations of time.
 
 ## Team Retros
+
+## Planning
+
+## Paired Programming
