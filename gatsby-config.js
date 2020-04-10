@@ -3,9 +3,9 @@ module.exports = {
     title: `TECH BLOG`,
     author: {
       name: `Casey Wylie`,
-      summary: `Software Engineer striving to be more than mediocre`,
+      summary: `I work in tech`,
     },
-    description: `A collection of lessons but hopefully not forgotten`,
+    description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
     siteUrl: `http://cmwylie19.github.io/`,
     social: {
       twitter: `cmwylie19`,
@@ -60,13 +60,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Case's Blog`,
+        short_name: `Case Wylie`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `content/assets/favicon.png`,
       },
     },
     `gatsby-plugin-react-helmet`,
