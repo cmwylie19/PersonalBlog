@@ -1,6 +1,6 @@
-# BligBlogger ![Node.js CI](https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg)
+# BligBlogger ![Node.js CI](https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg?event=push)
 
-README.md 
+
 # Keycloak Setup for Authentication
 
 ### Spin up Keycloak Container
