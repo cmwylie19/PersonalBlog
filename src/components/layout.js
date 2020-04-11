@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "gatsby"
-import Toggle from "react-toggle"
 import { rhythm, scale } from "../utils/typography"
 import ThemeButton from "./ThemeToggle"
 import "./style.css"
@@ -100,17 +99,17 @@ const Layout = ({
           {location.pathname === rootPath ? (
             <ThemeButton toggleTheme={toggleTheme} theme={theme} />
           ) : (
-            <Link
-              style={{
-                boxShadow: `none`,
-                color: `inherit`,
-              }}
-              to={`/`}
-            >
-              <br />
+              <Link
+                style={{
+                  boxShadow: `none`,
+                  color: `inherit`,
+                }}
+                to={`/`}
+              >
+                <br />
               home
-            </Link>
-          )}
+              </Link>
+            )}
         </footer>
       </div>
     </div>
