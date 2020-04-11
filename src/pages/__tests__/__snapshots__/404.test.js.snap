@@ -31,7 +31,7 @@ exports[`404 renders correctly 1`] = `
       <h3
         style={
           Object {
-            "fontFamily": "Red Hat Display, sans-serif",
+            "fontFamily": "'Red Hat Display', sans-serif",
             "marginTop": 0,
           }
         }
@@ -62,7 +62,7 @@ exports[`404 renders correctly 1`] = `
         Object {
           "alignItems": "center",
           "color": "grey",
-          "fontFamily": "Red Hat Text, sans-serif",
+          "fontFamily": "'Red Hat Text', sans-serif",
           "justifyContent": "center",
           "textAlign": "center",
         }

@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `TECH BLOG`,
+    title: `Tech Blog`,
     author: {
       name: `Casey Wylie`,
-      summary: `I work in tech`,
+      summary: `Software Engineer,👨🏼‍💻 Consultant, Traveler. Open Source Contributor`,
     },
     description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
     siteUrl: `http://cmwylie19.github.io/`,
@@ -64,7 +64,7 @@ module.exports = {
         short_name: `Case Wylie`,
         start_url: `/`,
         background_color: `#ffffff`,
-        theme_color: `#663399`,
+        theme_color: `#000`,
         display: `minimal-ui`,
         icon: `content/assets/favicon.png`,
       },

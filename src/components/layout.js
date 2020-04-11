@@ -17,7 +17,7 @@ const Layout = ({
 
   if (location.pathname === rootPath) {
     header = (
-      <h1
+      <h3
         style={{
           ...scale(1.5),
           marginBottom: rhythm(1.5),
@@ -33,13 +33,13 @@ const Layout = ({
         >
           {title}
         </Link>
-      </h1>
+      </h3>
     )
   } else {
     header = (
       <h3
         style={{
-          fontFamily: `Red Hat Display, sans-serif`,
+          fontFamily: `'Red Hat Display', sans-serif`,
           marginTop: 0,
         }}
       >
@@ -79,7 +79,7 @@ const Layout = ({
         <main>{children}</main>
         <footer
           style={{
-            fontFamily: `Red Hat Text, sans-serif`,
+            fontFamily: `'Red Hat Text', sans-serif`,
             textAlign: "center",
             color: theme ? "inherit" : "grey",
             justifyContent: "center",
@@ -99,17 +99,17 @@ const Layout = ({
           {location.pathname === rootPath ? (
             <ThemeButton toggleTheme={toggleTheme} theme={theme} />
           ) : (
-              <Link
-                style={{
-                  boxShadow: `none`,
-                  color: `inherit`,
-                }}
-                to={`/`}
-              >
-                <br />
+            <Link
+              style={{
+                boxShadow: `none`,
+                color: `inherit`,
+              }}
+              to={`/`}
+            >
+              <br />
               home
-              </Link>
-            )}
+            </Link>
+          )}
         </footer>
       </div>
     </div>

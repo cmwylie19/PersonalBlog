@@ -19,21 +19,21 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
       />
       <article>
         <header>
-          <h1
+          <h3
             style={{
               marginTop: rhythm(1),
               marginBottom: 0,
-              fontFamily: "Red Hat Display",
+              fontFamily: "'Red Hat Display', sans-serif",
             }}
           >
             {post.frontmatter.title}
-          </h1>
+          </h3>
           <p
             style={{
               ...scale(-1 / 5),
               display: `block`,
               marginBottom: rhythm(1),
-              fontFamily: "Red Hat Text",
+              fontFamily: "'Red Hat Text', sans-serif",
             }}
           >
             {post.frontmatter.date}
@@ -66,7 +66,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
                 to={previous.fields.slug}
                 rel="prev"
                 style={{
-                  fontFamily: `Red Hat Text, sans-serif`,
+                  fontFamily: `'Red Hat Text', sans-serif`,
                 }}
               >
                 ← {previous.frontmatter.title}
@@ -79,7 +79,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
                 to={next.fields.slug}
                 rel="next"
                 style={{
-                  fontFamily: `Red Hat Text, sans-serif`,
+                  fontFamily: `'Red Hat Text', sans-serif`,
                 }}
               >
                 {next.frontmatter.title} →

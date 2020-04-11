@@ -7,7 +7,7 @@ Wordpress2016.overrideThemeStyles = () => {
       boxShadow: `none`,
     },
     body: {
-      fontFamily: "Red Hat Text",
+      fontFamily: "'Red Hat Display', sans-serif",
     },
   }
 }
@@ -15,7 +15,7 @@ Wordpress2016.overrideThemeStyles = () => {
 delete Wordpress2016.googleFonts
 
 const typography = new Typography(Wordpress2016)
-console.log(typography.toJSON())
+// console.log(typography.toJSON())
 // Hot reload typography in development.
 if (process.env.NODE_ENV !== `production`) {
   typography.injectStyles()
