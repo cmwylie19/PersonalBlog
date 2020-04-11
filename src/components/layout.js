@@ -97,19 +97,8 @@ const Layout = ({
             Casey
           </a>
           {` `}
-          {location.pathname === rootPath ? (
+          {location.pathname === rootPath && (
             <ThemeButton toggleTheme={toggleTheme} theme={theme} />
-          ) : (
-            <Link
-              style={{
-                boxShadow: `none`,
-                color: `inherit`,
-              }}
-              to={`/`}
-            >
-              <br />
-              home
-            </Link>
           )}
         </footer>
       </div>
