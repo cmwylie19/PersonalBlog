@@ -5,6 +5,9 @@ Wordpress2016.overrideThemeStyles = () => {
   return {
     "a.gatsby-resp-image-link": {
       boxShadow: `none`,
+    },
+    "body": {
+      fontFamily: "Red Hat Text"
     }
   }
 }
