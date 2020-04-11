@@ -1,6 +1,5 @@
-import React, { useState, useContext, createContext } from "react"
+import React, { useState } from "react"
 import { Link, graphql } from "gatsby"
-import Toggle from "react-toggle"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
