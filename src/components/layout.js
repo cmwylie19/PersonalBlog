@@ -60,7 +60,8 @@ const Layout = ({ location, title, children }) => {
       <main>{children}</main>
       <footer
         style={{
-          fontFamily: `Red Hat Text, sans-serif`
+          fontFamily: `Red Hat Text, sans-serif`,
+          textAlign: 'center'
         }}
       >
         © {new Date().getFullYear()}, Built by
