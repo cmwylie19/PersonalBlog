@@ -1,13 +1,11 @@
 import React from "react"
-import renderer from "react-test-renderer"
-
+import { shallow } from "enzyme"
 import ThemeToggle from "../ThemeToggle"
 
-describe("Header", () => {
+describe("ThemeToggle", () => {
   it("renders correctly", () => {
-    const tree = renderer
-      .create(<ThemeToggle theme={true} toggleTheme={() => true} />)
-      .toJSON()
-    expect(tree).toMatchSnapshot()
+    const tree = shallow(<ThemeToggle theme={true} toggleTheme={() => true} />)
+    expect(tree).toBeDefined()
   })
+
 })
