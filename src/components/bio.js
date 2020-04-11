@@ -49,13 +49,14 @@ const Bio = () => {
           borderRadius: `50%`,
         }}
       />
-      <p style={{ fontFamily: 'Red Hat Display', fontSize: '1em' }}>
-        Personal blog by  <a href={`https://twitter.com/${social.twitter}`}>
+      <p style={{ fontFamily: "Red Hat Display", fontSize: "1em" }}>
+        Personal blog by{" "}
+        <a href={`https://twitter.com/${social.twitter}`}>
           <strong>{author.name}</strong>
-        </a><br />
+        </a>
+        <br />
         {author.summary}
         {` `}
-
       </p>
     </div>
   )

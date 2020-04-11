@@ -4,61 +4,152 @@ exports[`404 renders correctly 1`] = `
 <div
   style={
     Object {
-      "marginLeft": "auto",
-      "marginRight": "auto",
-      "maxWidth": "42rem",
-      "padding": "2.625rem 1.3125rem",
+      "backgroundColor": "#fbfbfb",
+      "height": "100vh",
+      "width": "100% !important",
     }
   }
 >
-  <header>
-    <h3
-      style={
-        Object {
-          "fontFamily": "Red Hat Display, sans-serif",
-          "marginTop": 0,
-        }
-      }
-    >
-      <a
-        href="/"
-        style={
-          Object {
-            "boxShadow": "none",
-            "color": "inherit",
-          }
-        }
-      >
-        test
-      </a>
-    </h3>
-  </header>
-  <main>
-    <h1>
-      Not Found
-    </h1>
-    <p>
-      You just hit a route that doesn't exist... the sadness.
-    </p>
-  </main>
-  <footer
+  <div
     style={
       Object {
-        "fontFamily": "Red Hat Text, sans-serif",
+        "backgroundColor": "#fbfbfb",
+        "marginLeft": "auto",
+        "marginRight": "auto",
+        "maxWidth": "42rem",
+        "padding": "2.625rem 1.3125rem",
       }
     }
   >
-    © 
-    2020
-    , Built by
-     
-    <a
-      href="mailto:casewylie@gmail.com?subject=blog"
-      rel="noopener noreferrer"
-      target="_blank"
+    <header>
+      <h3
+        style={
+          Object {
+            "fontFamily": "Red Hat Display, sans-serif",
+            "marginTop": 0,
+          }
+        }
+      >
+        <a
+          href="/"
+          style={
+            Object {
+              "boxShadow": "none",
+              "color": "inherit",
+            }
+          }
+        >
+          test
+        </a>
+      </h3>
+    </header>
+    <main>
+      <h1>
+        Not Found
+      </h1>
+      <p>
+        You just hit a route that doesn't exist... the sadness.
+      </p>
+    </main>
+    <footer
+      style={
+        Object {
+          "alignItems": "center",
+          "fontFamily": "Red Hat Text, sans-serif",
+          "justifyContent": "center",
+          "textAlign": "center",
+        }
+      }
     >
-      Casey
-    </a>
-  </footer>
+      © 
+      2020
+      , Built by
+       
+      <a
+        href="mailto:casewylie@gmail.com?subject=blog"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Casey
+      </a>
+       
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "justifyContent": "center",
+          }
+        }
+      >
+        Dark 
+        <div
+          style={
+            Object {
+              "width": "10px",
+            }
+          }
+        />
+         
+        <div
+          className="react-toggle"
+          onClick={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+        >
+          <div
+            className="react-toggle-track"
+          >
+            <div
+              className="react-toggle-track-check"
+            >
+              <svg
+                height="11"
+                viewBox="0 0 14 11"
+                width="14"
+              >
+                <title>
+                  switch-check
+                </title>
+                <path
+                  d="M11.264 0L5.26 6.004 2.103 2.847 0 4.95l5.26 5.26 8.108-8.107L11.264 0"
+                  fill="#fff"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              className="react-toggle-track-x"
+            >
+              <svg
+                height="10"
+                viewBox="0 0 10 10"
+                width="10"
+              >
+                <title>
+                  switch-x
+                </title>
+                <path
+                  d="M9.9 2.12L7.78 0 4.95 2.828 2.12 0 0 2.12l2.83 2.83L0 7.776 2.123 9.9 4.95 7.07 7.78 9.9 9.9 7.776 7.072 4.95 9.9 2.12"
+                  fill="#fff"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            className="react-toggle-thumb"
+          />
+          <input
+            aria-label="Toggle Theme"
+            className="react-toggle-screenreader-only"
+            onBlur={[Function]}
+            onFocus={[Function]}
+            type="checkbox"
+          />
+        </div>
+      </div>
+    </footer>
+  </div>
 </div>
 `;

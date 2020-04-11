@@ -23,7 +23,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             style={{
               marginTop: rhythm(1),
               marginBottom: 0,
-              fontFamily: 'Red Hat Display'
+              fontFamily: "Red Hat Display",
             }}
           >
             {post.frontmatter.title}
@@ -33,7 +33,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
               ...scale(-1 / 5),
               display: `block`,
               marginBottom: rhythm(1),
-              fontFamily: 'Red Hat Text'
+              fontFamily: "Red Hat Text",
             }}
           >
             {post.frontmatter.date}
@@ -62,18 +62,26 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         >
           <li>
             {previous && (
-              <Link to={previous.fields.slug} rel="prev" style={{
-                fontFamily: `Red Hat Text, sans-serif`
-              }}>
+              <Link
+                to={previous.fields.slug}
+                rel="prev"
+                style={{
+                  fontFamily: `Red Hat Text, sans-serif`,
+                }}
+              >
                 ← {previous.frontmatter.title}
               </Link>
             )}
           </li>
           <li>
             {next && (
-              <Link to={next.fields.slug} rel="next" style={{
-                fontFamily: `Red Hat Text, sans-serif`
-              }}>
+              <Link
+                to={next.fields.slug}
+                rel="next"
+                style={{
+                  fontFamily: `Red Hat Text, sans-serif`,
+                }}
+              >
                 {next.frontmatter.title} →
               </Link>
             )}
