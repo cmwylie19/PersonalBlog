@@ -6,14 +6,13 @@ Wordpress2016.overrideThemeStyles = () => {
     "a.gatsby-resp-image-link": {
       boxShadow: `none`,
     },
-    "body": {
-      fontFamily: "Red Hat Text"
-    }
+    body: {
+      fontFamily: "Red Hat Text",
+    },
   }
 }
 
 delete Wordpress2016.googleFonts
-
 
 const typography = new Typography(Wordpress2016)
 console.log(typography.toJSON())

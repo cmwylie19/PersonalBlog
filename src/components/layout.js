@@ -74,13 +74,15 @@ const Layout = ({
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
         }}
       >
-        <header style={{ color: theme ? 'inherit' : 'YellowGreen' }}>{header}</header>
+        <header style={{ color: theme ? "inherit" : "YellowGreen" }}>
+          {header}
+        </header>
         <main>{children}</main>
         <footer
           style={{
             fontFamily: `Red Hat Text, sans-serif`,
             textAlign: "center",
-            color: theme ? 'inherit' : 'grey',
+            color: theme ? "inherit" : "grey",
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -95,19 +97,23 @@ const Layout = ({
             Casey
           </a>
           {` `}
-          {location.pathname === rootPath ? <ThemeButton toggleTheme={toggleTheme} theme={theme} /> : <Link
-            style={{
-              boxShadow: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            <br />
-            home
-          </Link>}
+          {location.pathname === rootPath ? (
+            <ThemeButton toggleTheme={toggleTheme} theme={theme} />
+          ) : (
+            <Link
+              style={{
+                boxShadow: `none`,
+                color: `inherit`,
+              }}
+              to={`/`}
+            >
+              <br />
+              home
+            </Link>
+          )}
         </footer>
       </div>
-    </div >
+    </div>
   )
 }
 
