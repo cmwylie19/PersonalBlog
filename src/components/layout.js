@@ -1,9 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
-
+import Toggle from 'react-toggle'
 import { rhythm, scale } from "../utils/typography"
+import "./style.css"
 
-const Layout = ({ location, title, children }) => {
+const Layout = ({ theme, ThemeButton, location, title, children }) => {
   const rootPath = `${__PATH_PREFIX__}/`
   let header
 
@@ -48,26 +49,34 @@ const Layout = ({ location, title, children }) => {
     )
   }
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: rhythm(24),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
-      <header>{header}</header>
-      <main>{children}</main>
-      <footer
+    <div style={{
+      height: '100vh',
+      backgroundColor: theme ? "#818181" : "#fbfbfb",
+      width: '100% !important'
+    }}>
+      <div
         style={{
-          fontFamily: `Red Hat Text, sans-serif`,
-          textAlign: 'center'
+          backgroundColor: theme ? "#818181" : "#fbfbfb",
+          marginLeft: `auto`,
+          marginRight: `auto`,
+          maxWidth: rhythm(24),
+          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
         }}
       >
-        © {new Date().getFullYear()}, Built by
+        <header>{header}</header>
+        <main>{children}</main>
+        <footer
+          style={{
+            fontFamily: `Red Hat Text, sans-serif`,
+            textAlign: 'center'
+          }}
+        >
+          © {new Date().getFullYear()}, Built by
         {` `}
-        <a target="_blank" rel="noopener noreferrer" href="mailto:casewylie@gmail.com?subject=blog">Casey</a>
-      </footer>
+          <a target="_blank" rel="noopener noreferrer" href="mailto:casewylie@gmail.com?subject=blog">Casey</a>
+          {` `}<br />{ThemeButton}
+        </footer>
+      </div>
     </div>
   )
 }
