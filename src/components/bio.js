@@ -49,8 +49,8 @@ const Bio = () => {
           borderRadius: `50%`,
         }}
       />
-      <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "1em" }}>
-        Learnings from the field, by{" "}
+      <p>
+        Personal log by{" "}
         <a href={`https://twitter.com/${social.twitter}`}>
           <strong>{author.name}</strong>
         </a>

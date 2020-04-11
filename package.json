@@ -1,7 +1,7 @@
 {
   "name": "BligBlogger",
   "private": true,
-  "description": "A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.",
+  "description": "Personal blog based on field experiences",
   "version": "0.1.0",
   "author": "Case Wylie <casewylie@gmail.com>",
   "dependencies": {

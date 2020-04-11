@@ -23,7 +23,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             style={{
               marginTop: rhythm(1),
               marginBottom: 0,
-              fontFamily: "'Red Hat Display', sans-serif",
+              fontFamily: "'Montserrat', sans-serif",
             }}
           >
             {post.frontmatter.title}
@@ -33,7 +33,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
               ...scale(-1 / 5),
               display: `block`,
               marginBottom: rhythm(1),
-              fontFamily: "'Red Hat Text', sans-serif",
+              fontFamily: "'Montserrat', sans-serif",
             }}
           >
             {post.frontmatter.date}
@@ -66,7 +66,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
                 to={previous.fields.slug}
                 rel="prev"
                 style={{
-                  fontFamily: `'Red Hat Text', sans-serif`,
+                  fontFamily: `'Montserrat', sans-serif`,
                 }}
               >
                 ← {previous.frontmatter.title}
@@ -79,7 +79,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
                 to={next.fields.slug}
                 rel="next"
                 style={{
-                  fontFamily: `'Red Hat Text', sans-serif`,
+                  fontFamily: `'Montserrat', sans-serif`,
                 }}
               >
                 {next.frontmatter.title} →

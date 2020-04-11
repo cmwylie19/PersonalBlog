@@ -7,7 +7,7 @@ Wordpress2016.overrideThemeStyles = () => {
       boxShadow: `none`,
     },
     body: {
-      fontFamily: "'Red Hat Display', sans-serif",
+      fontFamily: "'Montserrat', sans-serif",
     },
   }
 }
