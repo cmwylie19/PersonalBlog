@@ -28,10 +28,10 @@ exports[`404 renders correctly 1`] = `
         }
       }
     >
-      <h3
+      <h2
         style={
           Object {
-            "fontFamily": "'Red Hat Display', sans-serif",
+            "fontFamily": "'Montserrat', sans-serif",
             "marginTop": 0,
           }
         }
@@ -47,7 +47,7 @@ exports[`404 renders correctly 1`] = `
         >
           test
         </a>
-      </h3>
+      </h2>
     </header>
     <main>
       <h1>

@@ -17,11 +17,12 @@ const Layout = ({
 
   if (location.pathname === rootPath) {
     header = (
-      <h3
+      <h2
         style={{
           ...scale(1.5),
           marginBottom: rhythm(1.5),
           marginTop: 0,
+          fontFamily: `'Montserrat', sans-serif`,
         }}
       >
         <Link
@@ -33,13 +34,13 @@ const Layout = ({
         >
           {title}
         </Link>
-      </h3>
+      </h2>
     )
   } else {
     header = (
-      <h3
+      <h2
         style={{
-          fontFamily: `'Red Hat Display', sans-serif`,
+          fontFamily: `'Montserrat', sans-serif`,
           marginTop: 0,
         }}
       >
@@ -52,7 +53,7 @@ const Layout = ({
         >
           {title}
         </Link>
-      </h3>
+      </h2>
     )
   }
   return (
