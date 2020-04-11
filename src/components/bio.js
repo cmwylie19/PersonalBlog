@@ -52,7 +52,7 @@ const Bio = () => {
       <p
         style={{ fontFamily: "'Red Hat Display', sans-serif", fontSize: "1em" }}
       >
-        Personal blog by{" "}
+        Learnings from the field, by {" "}
         <a href={`https://twitter.com/${social.twitter}`}>
           <strong>{author.name}</strong>
         </a>

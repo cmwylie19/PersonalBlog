@@ -3,7 +3,7 @@ module.exports = {
     title: `TechLife`,
     author: {
       name: `Casey Wylie`,
-      summary: `Software Engineer,👨🏼‍💻 Consultant, Traveler, Mentor Open Source Contributor, and Husband`,
+      summary: `Fellow techie, 👨🏼‍💻Husband, Traveler`,
     },
     description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
     siteUrl: `http://cmwylie19.github.io/`,
