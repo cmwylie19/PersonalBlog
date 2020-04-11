@@ -80,7 +80,7 @@ const Layout = ({
         <main>{children}</main>
         <footer
           style={{
-            fontFamily: `'Red Hat Text', sans-serif`,
+            fontFamily: `'Montserrat', sans-serif`,
             textAlign: "center",
             color: theme ? "inherit" : "grey",
             justifyContent: "center",
@@ -96,6 +96,10 @@ const Layout = ({
           >
             Casey
           </a>
+          <br />
+          <img src="https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg?event=push" />
+          {` `}
+          <img src="https://api.netlify.com/api/v1/badges/52f71f5e-6936-4ddf-94e5-049096e6f0f0/deploy-status" />
           {` `}
           {location.pathname === rootPath && (
             <ThemeButton toggleTheme={toggleTheme} theme={theme} />

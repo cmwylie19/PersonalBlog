@@ -62,7 +62,7 @@ exports[`404 renders correctly 1`] = `
         Object {
           "alignItems": "center",
           "color": "grey",
-          "fontFamily": "'Red Hat Text', sans-serif",
+          "fontFamily": "'Montserrat', sans-serif",
           "justifyContent": "center",
           "textAlign": "center",
         }
@@ -79,19 +79,15 @@ exports[`404 renders correctly 1`] = `
       >
         Casey
       </a>
+      <br />
+      <img
+        src="https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg?event=push"
+      />
        
-      <a
-        href="/"
-        style={
-          Object {
-            "boxShadow": "none",
-            "color": "inherit",
-          }
-        }
-      >
-        <br />
-        home
-      </a>
+      <img
+        src="https://api.netlify.com/api/v1/badges/52f71f5e-6936-4ddf-94e5-049096e6f0f0/deploy-status"
+      />
+       
     </footer>
   </div>
 </div>
