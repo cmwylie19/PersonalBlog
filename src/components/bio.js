@@ -50,7 +50,7 @@ const Bio = () => {
         }}
       />
       <p>
-        Welcome to my place on the internet. I am software engineer and I'm
+        Welcome, this is where I live on the internet. I am software engineer and I'm
         always traveling for work. I work on very large commercial projects
         related to application and infratructure development in clusters and
         distributed environments. I like that and fast foreign cars.{" "}
