@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `TechLife`,
+    title: `Casey Wylie`,
     author: {
       name: `Casey Wylie`,
-      summary: `I build stuff 👨🏼‍💻`,
+      summary: `I am Casey Wylie, and this is where I live in the internet`,
     },
     description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
     siteUrl: `http://cmwylie19.github.io/`,

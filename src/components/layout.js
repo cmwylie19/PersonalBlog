@@ -75,6 +75,11 @@ const Layout = ({
         }}
       >
         <header style={{ color: theme ? "inherit" : "YellowGreen" }}>
+          <link
+            data-react-helmet="true"
+            href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+            rel="stylesheet"
+          ></link>
           {header}
         </header>
         <main>{children}</main>
@@ -92,18 +97,17 @@ const Layout = ({
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="mailto:casewylie@gmail.com?subject=blog"
+            href="mailto:casewylie@gmail.com?subject=sup"
           >
             Casey
           </a>
-          <br />
-          <img src="https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg?event=push" />
+          {/* <img src="https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg?event=push" />
           {` `}<br />
           <img src="https://api.netlify.com/api/v1/badges/52f71f5e-6936-4ddf-94e5-049096e6f0f0/deploy-status" />
-          {` `}<br />
-          {location.pathname === rootPath && (
+          {` `}<br /> */}
+          {/* {location.pathname === rootPath && (
             <ThemeButton toggleTheme={toggleTheme} theme={theme} />
-          )}
+          )} */}
         </footer>
       </div>
     </div>

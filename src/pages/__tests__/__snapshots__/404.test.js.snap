@@ -28,6 +28,11 @@ exports[`404 renders correctly 1`] = `
         }
       }
     >
+      <link
+        data-react-helmet="true"
+        href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+        rel="stylesheet"
+      />
       <h2
         style={
           Object {
@@ -73,21 +78,12 @@ exports[`404 renders correctly 1`] = `
       , Built by
        
       <a
-        href="mailto:casewylie@gmail.com?subject=blog"
+        href="mailto:casewylie@gmail.com?subject=sup"
         rel="noopener noreferrer"
         target="_blank"
       >
         Casey
       </a>
-      <br />
-      <img
-        src="https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg?event=push"
-      />
-       
-      <img
-        src="https://api.netlify.com/api/v1/badges/52f71f5e-6936-4ddf-94e5-049096e6f0f0/deploy-status"
-      />
-       
     </footer>
   </div>
 </div>

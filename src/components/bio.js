@@ -50,12 +50,15 @@ const Bio = () => {
         }}
       />
       <p>
-        Personal log by{" "}
-        <a href={`https://twitter.com/${social.twitter}`}>
+        Welcome to my place on the internet. I am software engineer and I'm
+        always traveling for work. I work on very large commercial projects
+        related to application and infratructure development in clusters and
+        distributed environments. I like that and fast foreign cars.{" "}
+        {/* <a href={`https://twitter.com/${social.twitter}`}>
           <strong>{author.name}</strong>
-        </a>
+        </a> */}
         <br />
-        {author.summary}
+        {/* {author.summary} */}
         {` `}
       </p>
     </div>
