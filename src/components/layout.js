@@ -4,14 +4,7 @@ import { rhythm, scale } from "../utils/typography"
 import ThemeButton from "./ThemeToggle"
 import "./style.css"
 
-const Layout = ({
-  theme,
-  toggleTheme,
-  location,
-  title,
-  children,
-  ...props
-}) => {
+const Layout = ({ theme, toggleTheme, location, title, children, ...props }) => {
   const rootPath = `${__PATH_PREFIX__}/`
   let header
 
@@ -75,11 +68,7 @@ const Layout = ({
         }}
       >
         <header style={{ color: theme ? "inherit" : "YellowGreen" }}>
-          <link
-            data-react-helmet="true"
-            href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
-            rel="stylesheet"
-          ></link>
+          <link data-react-helmet="true" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"></link>
           {header}
         </header>
         <main>{children}</main>
@@ -94,11 +83,7 @@ const Layout = ({
         >
           © {new Date().getFullYear()}, Built by
           {` `}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="mailto:casewylie@gmail.com?subject=sup"
-          >
+          <a target="_blank" rel="noopener noreferrer" href="mailto:casewylie@gmail.com?subject=sup">
             Casey
           </a>
           {/* <img src="https://github.com/cmwylie19/BligBlogger/workflows/Node.js%20CI/badge.svg?event=push" />
