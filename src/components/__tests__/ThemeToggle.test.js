@@ -8,7 +8,7 @@ describe("ThemeToggle", () => {
 
   it("renders correctly", () => {
 
-    const tree = shallow(<ThemeToggle theme="Light" toggleTheme={() => "Dark"} />)
+    const tree = shallow(<ThemeToggle theme={false} />)
     expect(tree).toBeDefined();
     expect(tree.length).toBe(1);
   })
