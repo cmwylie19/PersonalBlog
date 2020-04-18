@@ -28,11 +28,6 @@ exports[`404 renders correctly 1`] = `
         }
       }
     >
-      <link
-        data-react-helmet="true"
-        href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
-        rel="stylesheet"
-      />
       <h2
         style={
           Object {
@@ -59,7 +54,7 @@ exports[`404 renders correctly 1`] = `
         Not Found
       </h1>
       <p>
-        You just hit a route that doesn't exist... the sadness.
+        You just hit a route that doesn't exist.
       </p>
     </main>
     <footer
