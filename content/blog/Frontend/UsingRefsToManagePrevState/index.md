@@ -1,7 +1,7 @@
 ---
-title: State Versioning
+title: State Versioning with Refs
 date: "2020-04-10T22:40:32.169Z"
-description: Dealing with excessive rendering in components.
+description: Using Refs to handle prevState
 ---
 
 ## State Versioning
