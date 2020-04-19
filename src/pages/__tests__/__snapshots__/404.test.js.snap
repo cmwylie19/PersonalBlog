@@ -25,6 +25,7 @@ exports[`404 renders correctly 1`] = `
       style={
         Object {
           "color": "YellowGreen",
+          "fontFamily": "Montserrat",
         }
       }
     >

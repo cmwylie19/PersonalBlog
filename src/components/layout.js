@@ -67,7 +67,7 @@ const Layout = ({ theme, toggleTheme, location, title, children, ...props }) => 
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
         }}
       >
-        <header style={{ color: theme ? "inherit" : "YellowGreen" }}>
+        <header style={{ fontFamily: "Montserrat", color: theme ? "inherit" : "YellowGreen" }}>
           {header}
         </header>
         <main>{children}</main>
