@@ -1,10 +1,10 @@
 ---
-title: KeyCloak Overview
+title: Quick Tour of the Keycloak Server UI 
 date: "2020-04-20T22:40:32.169Z"
-description: Using KeyCloak in Application Development
+description: get acquainted with
 ---
 
-> ### This guide aims to outline several key functionalities in keycloak pertinent to _application develop_ and infrastrucutre securities.
+> ### This guide aims to outline several key functionalities in User Interface.
 
 ### Table Of Contents
 ____
@@ -14,7 +14,8 @@ ____
   * Creating a realm
   * Adding a user
   * Creating a Client (Application)
-+ Locking down Applications
+  * Accessing the realm tokens
+
 
 ## Spin up Keycloak locally
 ___________________________
@@ -81,4 +82,16 @@ ___
 
 ![Mange Tokens](token.png "Manage tokens")
 
-## Securing Applications 
+## Operating Modes
+
+> **Standalone mode** - This is useful whhen only one instance of the Keycloak Server is necessary. This mode is not recommended for production since this  introduces a single point of failure.
+
+[More info can be found here ](https://www.keycloak.org/docs/latest/server_installation/)
+
+
+> **Standalone Clustered Mode** - This is the approach for using the Keycloak server from within a cluster. It requires an instance of Keycloak on each machine. It is easy to deploy, but difficult to maintain as changes require modifying the configuration on each machine.
+
+[More info can be found here ](https://www.keycloak.org/docs/latest/server_installation/)
+
+
+> **Domain Clustered Mode** - This mode is a way to manage your keycloak servers from a centralized location, normally, each time you make a configuration change, that change needs to be replication in each Keycloak server instance, with domain cluster mode you make a change to a centralized location and publish the change so it is reflected in the other keycloak instances.
