@@ -1,7 +1,7 @@
 ---
 title: Quick Tour of the Keycloak Server UI 
 date: "2020-04-20T22:40:32.169Z"
-description: get acquainted with
+description: get acquainted with the keycloak user interface
 ---
 
 > ### This guide aims to outline several key functionalities in User Interface.
