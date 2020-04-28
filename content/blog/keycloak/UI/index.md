@@ -50,7 +50,7 @@ Scroll over text "Master" on the top left and a dropdown menu will appear with b
 
 ### Create a user
 ___
-There is also another wya to create a user in keycloak . 
+There is also another way to create a user in keycloak . 
 - From the left side menu, click Users
 - On the right side, click the button "Add User"
 <br />
