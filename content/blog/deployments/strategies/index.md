@@ -1,6 +1,6 @@
 ---
 title: Deployment Strategies
-date: "2020-06-10T22:40:32.169Z"
+date: "2020-06-04T22:40:32.169Z"
 description: Deployment strategies and when to use them
 ---
 
