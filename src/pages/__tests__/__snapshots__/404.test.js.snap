@@ -65,6 +65,7 @@ exports[`404 renders correctly 1`] = `
           "color": "grey",
           "fontFamily": "'Montserrat', sans-serif",
           "justifyContent": "center",
+          "padding": "20px",
           "textAlign": "center",
         }
       }

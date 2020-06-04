@@ -90,6 +90,7 @@ const Layout = ({
             color: theme ? "inherit" : "grey",
             justifyContent: "center",
             alignItems: "center",
+            padding: "20px"
           }}
         >
           © {new Date().getFullYear()}, Built by
