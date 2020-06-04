@@ -1,16 +1,12 @@
 ---
-title: State Versioning with Refs
+title: Building a pipeline
 date: "2020-04-10T22:40:32.169Z"
-description: Using Refs to handle prevState
+description: Building a CICD pipeline for an application in Kubernetes
 ---
 
-## State Versioning
+## Building a CI/CD pipeline that deliverys an app from repo into production environment.
 
-Dealinng state changes can get messy when adding layers of complexity on top of the initial state change to determine if the current state of the object is different that the initial state. There are plenty of ways to go about it, namely creating an object with a key called previousState and assigning the current state to it on changes before updating the current state to the new value, but lets say in this case you are not allowed to take that route.
-
-Suppose you are creating an app to track status updates. You are presented with a text box which is prepopulated with the current status and you can make changes to that text box and submit it and it let all subscribers know that a status has been made.
-
-So, how can you provide logic to verify that the value of the text that you submitted is different than the initial value, assuming the previous version of the status is erased and updated as soon as you change the entry in the text field?
+The goal of this post is to teach you how to build a pipeline that will take an application from a repository to production. Aftwards, we will discuss relevent kubernetes and Jenkins configuration files to keep in your repository incase we want to tear it down and spin it back up. The build process integrates Gogs, which is an open source version of a GitHub, Nexus for storing large artifacts and built versions of code, SonarQube for static code analysis. We will use a Blue-Green [deployment strategy](http://localhost:8000/deployments/strategies) and cautiously shift traffic over to the new version.
 
 ```
 function LastStateComponent() {

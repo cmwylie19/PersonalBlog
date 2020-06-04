@@ -8,11 +8,10 @@ description: Using keycloak middleware to lock down endpoints
 
 This was written using node and typescript, if you are using regular javascript just drop the types.
 
-
 _Keycloak middleware can be used to secure backend endpoints to ensure that only users with the correct roles are able to access them_
 
-
 ### Install Keycloak Connect and express-session
+
 ```
 npm i --save-dev keycloak-connect
 
@@ -20,9 +19,11 @@ npm i --save-dev express-session
 ```
 
 ### Create a keycloak config file
+
 _keys from this keycloak config can be found in the keycloak admin console under the client_
 
 ![Client config](client-config.png "Client config")
+
 ```
 export const keycloakConfig: any = {
   realm: process.env.REALM,
@@ -34,7 +35,6 @@ export const keycloakConfig: any = {
 }
 
 ```
-
 
 ### Create the session store and initialize keycloak
 

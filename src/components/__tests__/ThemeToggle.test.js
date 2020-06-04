@@ -3,7 +3,6 @@ import { shallow, mount } from "enzyme"
 import ThemeToggle from "../ThemeToggle"
 import * as Gatsby from "gatsby"
 
-
 const HOC = ({ element }) => {
   let [theme, setTheme] = useState(false)
 
@@ -12,17 +11,15 @@ const HOC = ({ element }) => {
   return <element theme={theme} toggleTheme={() => toggleTheme()} />
 }
 describe("ThemeToggle", () => {
-
   it("renders correctly", () => {
-    let theme = false;
-    const tree = shallow(<ThemeToggle theme={theme} toggleTheme={() => theme} />)
+    let theme = false
+    const tree = shallow(
+      <ThemeToggle theme={theme} toggleTheme={() => theme} />
+    )
     console.log(tree.text())
-    expect(tree).toBeDefined();
-    expect(tree.length).toBe(1);
+    expect(tree).toBeDefined()
+    expect(tree.length).toBe(1)
     expect(tree.text()).toBe("Dark ")
-    tree.find("#toggle").simulate('change')
-
-
+    tree.find("#toggle").simulate("change")
   })
-
 })

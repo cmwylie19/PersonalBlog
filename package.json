@@ -1,7 +1,7 @@
 {
-  "name": "BligBlogger",
+  "name": "CaseyWylieBlog",
   "private": true,
-  "description": "Personal blog based on field experiences",
+  "description": "Casey Wylie Personal Blog",
   "version": "0.1.0",
   "author": "Case Wylie <casewylie@gmail.com>",
   "dependencies": {

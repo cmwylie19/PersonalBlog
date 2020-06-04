@@ -3,7 +3,7 @@ module.exports = {
     title: `Casey Wylie`,
     author: {
       name: `Casey Wylie`,
-      summary: `I am Casey Wylie, and this is where I live in the internet`,
+      summary: `Hello, I'm Casey Wylie and this is where I live on the internet. I develop cloud native applications for an Open Source company. I'm passionate about family, traveling and cars.`,
     },
     description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
     siteUrl: `http://cmwylie19.github.io/`,
@@ -80,7 +80,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: "UA-163811762-1"
+        trackingId: "UA-163811762-1",
       },
     },
   ],

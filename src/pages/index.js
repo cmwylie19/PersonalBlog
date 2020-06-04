@@ -11,7 +11,13 @@ const BlogIndex = ({ data, location, ...props }) => {
   const posts = data.allMarkdownRemark.edges
 
   return (
-    <Layout {...props} location={location} theme={theme} toggleTheme={() => setTheme(!theme)} title={siteTitle}>
+    <Layout
+      {...props}
+      location={location}
+      theme={theme}
+      toggleTheme={() => setTheme(!theme)}
+      title={siteTitle}
+    >
       <SEO title="All posts" />
       <Bio />
       {posts.map(({ node }) => {

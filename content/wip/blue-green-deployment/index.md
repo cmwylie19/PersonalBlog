@@ -6,7 +6,8 @@ description: Blue Green App Deployment in OpenShift
 
 ## Set up a Blue Green Deployment in OpenShift
 
-## Create a project 
+## Create a project
+
 > oc new-project "${whoami}-deployments --display-name "${whoami} Deployments"
 
 ### Create two apps
@@ -16,12 +17,15 @@ description: Blue Green App Deployment in OpenShift
 > oc new-app --name="green" labels=name=green php~https://github.com/redhat-gpte-devopsautomation/cotd.git --env=SELECTOR=cities
 
 ### Expose the service for the blue app
+
 > oc expose svc/blue --name=bluegreen
 
 ### In a second terminal
+
 > while true; do curl -s $(oc get route bluegreen --template='{{ .spec.host }}')/item.php | grep "data/images" | awk '{print $5}'; sleep 1; done
 
 ## Execute Blue-Green deployment
+
 > oc patch route/bluegreen -p '{"spec":{"to":{"name":"green"}}}'
 
 > oc set env dc/blue SELECTOR=pets

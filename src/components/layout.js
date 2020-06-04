@@ -4,7 +4,14 @@ import { rhythm, scale } from "../utils/typography"
 import ThemeButton from "./ThemeToggle"
 import "./style.css"
 
-const Layout = ({ theme, toggleTheme, location, title, children, ...props }) => {
+const Layout = ({
+  theme,
+  toggleTheme,
+  location,
+  title,
+  children,
+  ...props
+}) => {
   const rootPath = `${__PATH_PREFIX__}/`
   let header
 
@@ -67,7 +74,12 @@ const Layout = ({ theme, toggleTheme, location, title, children, ...props }) => 
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
         }}
       >
-        <header style={{ fontFamily: "Montserrat", color: theme ? "inherit" : "YellowGreen" }}>
+        <header
+          style={{
+            fontFamily: "Montserrat",
+            color: theme ? "inherit" : "YellowGreen",
+          }}
+        >
           {header}
         </header>
         <main>{children}</main>
@@ -82,7 +94,11 @@ const Layout = ({ theme, toggleTheme, location, title, children, ...props }) => 
         >
           © {new Date().getFullYear()}, Built by
           {` `}
-          <a target="_blank" rel="noopener noreferrer" href="mailto:casewylie@gmail.com?subject=sup">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="mailto:casewylie@gmail.com?subject=sup"
+          >
             Casey
           </a>
         </footer>
