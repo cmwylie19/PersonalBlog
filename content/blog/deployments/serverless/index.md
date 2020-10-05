@@ -5,7 +5,7 @@ description: How to do Blue/Green and Canary Deployments in Knative
 ---
 
 # Serverless Deployments
-_In this article I am going to show you how to deploy serverless applications on OpenShift using Knative. In the tutorial I will be going over a Blue/Green and a Canary deployment of a simple node.js application. This article assumes that you already have access to a OpenShift Cluster and that you have already installed the Knative Serving operator and this is a precursor to starting not listed in the article._
+_In this article I am going to show you how to deploy serverless applications on OpenShift using Knative. In the tutorial I will be going over a Blue/Green and a Canary deployment of a simple node.js application. This article assumes that you already have access to a OpenShift Cluster. I am using OpenShift 4.5, if you are not using 4.5 change the file in `deploy/operator-subscription.yaml` `spec.channel` to the version of OpenShift that you are using._
 
 > Serverless Deployment Lab
 >- Install the kn tool
