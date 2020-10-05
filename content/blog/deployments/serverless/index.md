@@ -1,6 +1,6 @@
 ---
 title: Blue/Green and Canary Deployments in Knative
-date: "2020-08-04T22:40:32.169Z"
+date: "2020-08-05T22:40:32.169Z"
 description: How to do Blue/Green and Canary Deployments in Knative
 ---
 
