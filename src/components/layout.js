@@ -98,9 +98,9 @@ const Layout = ({
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="mailto:casewylie@gmail.com?subject=sup"
+            href="https://www.linkedin.com/in/casewylie/"
           >
-            Casey
+            Me!
           </a>
         </footer>
       </div>

@@ -75,11 +75,11 @@ exports[`404 renders correctly 1`] = `
       , Built by
        
       <a
-        href="mailto:casewylie@gmail.com?subject=sup"
+        href="https://www.linkedin.com/in/casewylie/"
         rel="noopener noreferrer"
         target="_blank"
       >
-        Casey
+        Me!
       </a>
     </footer>
   </div>
