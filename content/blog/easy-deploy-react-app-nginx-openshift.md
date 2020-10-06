@@ -1,5 +1,5 @@
 ---
-title: Easy way to deploy React App in OpenShift
+title: Deploy React App in NGINX on OpenShift
 date: "2020-08-04T22:40:32.169Z"
 description: Clone React app from github repository and deploy into OpenShift in an nginx container.
 ---
