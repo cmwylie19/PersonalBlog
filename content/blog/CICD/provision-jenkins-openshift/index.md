@@ -1,6 +1,6 @@
 ---
 title: Provision jenkins using templates
-date: "2020-08-05T22:40:32.169Z"
+date: "2020-08-07T22:40:32.169Z"
 description: Provision jenkins using templates
 ---
 
