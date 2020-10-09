@@ -1,0 +1,7 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    role: jenksin-slave
+  name: origin-jenkins-agent-nodejs
+  namespace: chatamos

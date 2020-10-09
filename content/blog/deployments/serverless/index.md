@@ -1,7 +1,7 @@
 ---
 title: Blue/Green and Canary Deployments in Knative
 date: "2020-08-05T22:40:32.169Z"
-description: How to do Blue/Green and Canary Deployments in Knative
+description: Knative is a feature rich faucet of kubernetes where pods scale down to 0 if they do not receive any more requests during a designated window.
 ---
 
 # Serverless Deployments

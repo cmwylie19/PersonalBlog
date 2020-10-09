@@ -1,7 +1,7 @@
 ---
 title: Access Linux Environment in an overly secure coorporate computer environment with Access To OpenShift
 date: "2020-08-09T22:40:32.169Z"
-description: Access Linux Environment in an overly secure coorporate computer environment with Access To OpenShift
+description: Ever had an instance when you felt like you had access to nothing? This is a workout that works in kubernetes or docker.
 ---
 
 > # Background

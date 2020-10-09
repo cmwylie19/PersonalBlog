@@ -1,7 +1,7 @@
 ---
 title: Intro to Open Shift Concepts
 date: "2020-04-18T22:40:32.169Z"
-description: Introduction to commonly used Open Shift terminology
+description: These are important to know and a good way to get started.
 ---
 
 ## Open Shift Terms and Concepts
