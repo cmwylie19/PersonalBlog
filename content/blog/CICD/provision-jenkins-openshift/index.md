@@ -25,7 +25,7 @@ _Currently, the jenkins-xxxx pod is running the image for the master jenkins. It
 
 ### Import the image
 ```
-oc import-image https://quay.io/repository/cmwylie19/origin-jenkins-agent-nodejs --confirm
+oc import-image quay.io/openshift/origin-jenkins-agent-nodejs --confirm 
 ```
 
 label the image
