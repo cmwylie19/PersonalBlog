@@ -3,7 +3,7 @@ module.exports = {
     title: `Casey Wylie`,
     author: {
       name: `Casey Wylie`,
-      summary: `Hello, I'm Casey Wylie and this is where I live on the internet. I develop cloud native applications for a living and I work for Red Hat. My opinions are my own. I'm passionate about my family, traveling, and cars. I have this blog to remember things that I have picked up along the way.`,
+      summary: `Hello, I'm Casey Wylie. I'm a Kubernetes Architect. I'm passionate about working on cloud native technologies and building things in general.`,
     },
     description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
     siteUrl: `http://cmwylie19.github.io/`,

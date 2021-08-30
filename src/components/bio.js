@@ -34,6 +34,8 @@ const Bio = () => {
       style={{
         display: `flex`,
         marginBottom: rhythm(2.5),
+        alignItems: "center",
+        justifyContent: "center"
       }}
     >
       <Image
@@ -46,7 +48,7 @@ const Bio = () => {
           // borderRadius: `15px`
         }}
         imgStyle={{
-          borderRadius: `16px`,
+          borderRadius: `50%`,
         }}
       />
       <p>
