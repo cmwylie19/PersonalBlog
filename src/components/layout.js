@@ -103,6 +103,7 @@ const Layout = ({
             Me!
           </a>
         </footer>
+        {/* <ThemeButton toggleTheme={toggleTheme} theme={theme} /> */}
       </div>
     </div>
   )

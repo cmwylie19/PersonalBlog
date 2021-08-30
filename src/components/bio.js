@@ -35,7 +35,8 @@ const Bio = () => {
         display: `flex`,
         marginBottom: rhythm(2.5),
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        flexDirection:"row"
       }}
     >
       <Image
@@ -44,17 +45,18 @@ const Bio = () => {
         style={{
           marginRight: rhythm(1 / 2),
           marginBottom: 0,
-          minWidth: 150,
+          minWidth: 90,
+          height:90
+
+          // height:
           // borderRadius: `15px`
         }}
         imgStyle={{
           borderRadius: `50%`,
         }}
       />
-      <p>
-        {author.summary}
+       {author.summary}
         {` `}
-      </p>
     </div>
   )
 }
