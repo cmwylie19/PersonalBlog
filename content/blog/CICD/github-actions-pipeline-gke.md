@@ -209,7 +209,7 @@ rm key.json
 _Now push your code to GitHub and try the new pipeline._
 ## Summary
 
-This guide is meant to give you a minimum working pipeline, the next steps to accomplish is to add elements to your pipeline to unit test, integration test, performance test, security test, and analyze static code to ensure that the code that is making it through the pipeline is ready for prod.
+This guide was meant to give you a minimum working pipeline, the next steps to accomplish are to add elements to your pipeline to unit test, integration test, performance test, security test, and analyze static code to ensure that the code that is making it through the pipeline is ready for prod.
 
 There is a link below that refences the document on how to deploy to GKE, although the roles added to the service account in the document **did not work.** I had to add `--role=roles/container.developer` to fully get the pipeline working.
 
