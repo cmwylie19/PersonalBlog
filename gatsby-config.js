@@ -3,7 +3,7 @@ module.exports = {
     title: `Casey Wylie`,
     author: {
       name: `Casey Wylie`,
-      summary: `Written by Casey Wylie, a Kubernetes Architect out of Raleigh NC, who is passionate about cloud native technologies and building things in general.`,
+      summary: `Written by Casey Wylie, a Kubernetes Platform Architect out of Raleigh NC, who is passionate about cloud native technologies and building things in general.`,
     },
     description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
     siteUrl: `http://cmwylie19.github.io/`,
