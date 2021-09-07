@@ -4,19 +4,28 @@ date: "2021-08-31T22:40:32.169Z"
 description: A quick and simple way to configure access logging in istio is by editing the istio config map, this blog demonstrates how to configure the access logs via the config map and through a helm values file.
 ---
 ![Access Logs](/access_log.png)   
-> _As of writing this blog, I have not seen many straight forward answers explaining how to configure access logging in Istio. It's not a very advanced topic and common knowledge to many, but essentially one of the most critical elements that need to be configured properly to be able to pin point, disect, and diagnose network errors that occur on your system. In this blog, we will configure access logging to print in JSON format and add some important flags to our logging configuration to be able to catch and diagnose errors._   
+> As of writing this blog, I have not seen many straight forward answers explaining how to configure access logging in Istio which is silly as it is not a very advanced topic or even hard to do. This post will talk you through important flags to put in your access logs, and outline two straight forward approaches to configuring your access logs.
 
 ## Contents
-- **Part 1** - Editing the config map directly
-- **Part 2** - Configuration through Helm values file
+- **Part 1** - Setting up the Access Log with Flags
+- **Part 2** - Configuration through ConfigMap
+- **Part 3** - Configuration through Helm values file
 
-### Importantance of Flags in the Access Logs
-Many things can go wrong on a the network. The access log is your way of discovering the source and network information regarding requests that come through your system. You can find the IP Addresses of visitors, you can find how many `429`s you are receiving, you can see failed requests, all of this information is crucial to decision making on how to prevent these errors in the future. For instance, if you are getting `503`s you can add timeout and retries to you services to see if that resolves the issue. The important part is that you are able to identify the problems as they occur.   
+## Importantance of Flags in the Access Logs
+Many things can go wrong on a the network. Access logs help to pinpoint, disect, and diagnose network errors that occur on your system. The access log can show:
+- remote IP address of the request
+- status codes of request
+- Flags associated with the request detailing more information
+- if ssl was used on the request
+- destination of the request
+
+and a lot more. This information is needed in making decisions on how to improve your system, like adding timeouts, retries, rate limiting, or a web application firewall.
+ 
+## Part 1 - Setting up the Access Log with Flags
 
 When we configure access logs in Istio, we are actually configuring [Envoy Access Logging](https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage).   
-
-### Setting up the Access Log Flags
-Access Log flags are referred to as `Command Operators` in Envoy. By definition, they are used to extract values that will be inserted into the access logs. This section goes over some Command Operators that will make life easier when debugging requests in the access log.   
+   
+Access Log flags are referred to as `Command Operators` in Envoy. By definition, they are used to extract values that will be inserted into the access logs. I recommend having _at least_ the following Command Operators to make life easier when debugging requests in the access log.   
 
 `%START_TIME%` - Request start time including milliseconds   
    
@@ -75,8 +84,7 @@ OM: Overload Manager terminated the request.
 `%DOWNSTREAM_LOCAL_URI_SAN%` - The URIs present in the SAN of the local certificate used to establish the downstream TLS connection.   
 
 
-## Part 1 - Editing the ConfigMap directly
-### Configuring the Access Log
+## Part 2 - Configuration through ConfigMap
 To configure Access Logging in Istio, the `istio` `configmap` in `istio-system` must be edited. To illustrate this, lets start by installing Istio with the demo profile. After we learn how to edit the config map to get access logs, we are going to learn how to configure access logging through Helm so that you don't have to edit the config map everytime you install Istio.   
 
 Spin up a local minikube cluster and install Istio using default profile.   
@@ -90,8 +98,10 @@ Look at the config map in `istio-system` called `istio`:
 ```
 kubectl get cm istio -n istio-system -oyaml
 ```
-The result will look similar to the output below. We are going to need to add a block to the `.data.mesh`
+The result will look similar to the output below. We are going to need to add `accessLogEncoding` and `accessLogFormat` to the `.data.mesh` section.   
+
 ```
+# Original ConfigMap
 apiVersion: v1
 data:
   mesh: |-
@@ -111,52 +121,10 @@ metadata:
   name: istio
   namespace: istio-system
 ```
-
-Add the following block directly under `accessLogFile`:
-```
-    accessLogEncoding: JSON
-    accessLogFormat: |
-      {
-            # Request start time including milliseconds.
-            systemTime: '%START_TIME%'
-            # Bytes Received in the request body
-            bytesReceived: '%BYTES_RECEIVED%'
-            # Request Method
-            httpMethod: '%REQ(:METHOD)%'
-            # Protocol. Currently either HTTP/1.1 or HTTP/2.
-            protocol: '%PROTOCOL%'
-            # HTTP response code. Note that a response code of ‘0’ means that the server never sent the
-            # beginning of a response. This generally means that the (downstream) client disconnected.
-            responseCode: '%RESPONSE_CODE%'
-            # Total duration in milliseconds of the request from the start time to the last byte out
-            clientDuration: '%DURATION%'
-            # HTTP Response code details
-            responseCodeDetails: '%RESPONSE_CODE_DETAILS%'
-            # Connection termination details
-            connectionTerminationDetails: '%CONNECTION_TERMINATION_DETAILS%'
-            # Total duration in milliseconds of the request from the start time to the first byte read from the upstream host
-            targetDuration: '%RESPONSE_DURATION%'
-            # Value of the "x-envoy-original-path" header (falls back to "path" header if not present)
-            path: '%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%'
-            # Upstream cluster to which the upstream host belongs to
-            upstreamName: '%UPSTREAM_CLUSTER%'
-            # Unique tracking ID
-            requestId: '%REQ(X-REQUEST-ID)%'
-            # Response flags; will contain details about the response or connectiuon
-            responseFlags: '%RESPONSE_FLAGS%'
-            # Name of the route
-            routeName: `%ROUTE_NAME%`
-            # Remote address of the requester
-            downstreamRemoteAddress: '%DOWNSTREAM_REMOTE_ADDRESS%'
-            # Upstream host url
-            upstreamHost: '%UPSTREAM_HOST%'
-            # URIs present on the SAN of the local certificate used to establish downstream TLS
-            downstreamLocalURISan: '%DOWNSTREAM_LOCAL_URI_SAN%'
-      }
-```   
-
+ 
 The end state should look similar to the following below:
 ```
+# Updated ConfigMap
 apiVersion: v1
 data:
   mesh: |-
@@ -220,187 +188,10 @@ Now, since we edited the config map that is attached to the Istio deployment in 
 kubectl rollout restart deploy/istio -n istio-system
 ```
 
-### Testing our new Access Logging Configuration
-Now it is time to create a gateway, a virtual service, and deploy an app to test how the access logging works.   
+That is it, that is all your need to configure an access log. The next will show how to accomplish the same through helm overrides.
 
-The application we will deploy is `kennethreitz's` `httpbin` application. It is fantastic for quick debugging and is easy to deploy. Copy and paste the command below into a terminal.
-
-```
-kubectl apply -f -<<EOF
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: default
-spec:
-  selector:
-    istio: ingressgateway
-  servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: default
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - default
-  http:
-  - match:
-    - uri:
-        exact: /get
-    route:
-    - destination:
-        host: httpbin
-        port:
-          number: 8000
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: httpbin
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: httpbin
-  labels:
-    app: httpbin
-    service: httpbin
-spec:
-  ports:
-  - name: http
-    port: 8000
-    targetPort: 80
-  selector:
-    app: httpbin
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: httpbin
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: httpbin
-      version: v1
-  template:
-    metadata:
-      labels:
-        app: httpbin
-        version: v1
-    spec:
-      serviceAccountName: httpbin
-      containers:
-      - image: docker.io/kennethreitz/httpbin
-        imagePullPolicy: IfNotPresent
-        name: httpbin
-        ports:
-        - containerPort: 80
-EOF
-```
-
-Now, we need to give the istio-ingressgateway service a LoadBalancer to use. We can do this by opening a new terminal, and running `minikube tunnel`.
-
-After starting `minikube tunnel` in a separate terminal, we need to run requests against the gateway so we can verify that our access logs are working.
-
-```
-for z in {0..29};do curl http://localhost/get; done  
-```
-
-Now, lets check the access logs:
-```
-kubectl logs svc/istio-ingressgateway -n istio-system --tail=20 | jq 
-```
-
-Your output should resemble the following:   
-![Access Logs](/access_log.png)   
-
-If they don't try applying this config map directly, and rolling out the istio deployment again. 
-- Stop the `minikube tunnel` command in the other terminal
-- apply this config map directly:
-```
-kubectl apply -f -<<EOF
-apiVersion: v1
-data:
-  mesh: |-
-    accessLogFile: /dev/stdout
-    accessLogEncoding: JSON
-    accessLogFormat: |
-      {
-            # Request start time including milliseconds.
-            systemTime: '%START_TIME%'
-            # Bytes Received in the request body
-            bytesReceived: '%BYTES_RECEIVED%'
-            # Request Method
-            httpMethod: '%REQ(:METHOD)%'
-            # Protocol. Currently either HTTP/1.1 or HTTP/2.
-            protocol: '%PROTOCOL%'
-            # HTTP response code. Note that a response code of ‘0’ means that the server never sent the
-            # beginning of a response. This generally means that the (downstream) client disconnected.
-            responseCode: '%RESPONSE_CODE%'
-            # Total duration in milliseconds of the request from the start time to the last byte out
-            clientDuration: '%DURATION%'
-            # HTTP Response code details
-            responseCodeDetails: '%RESPONSE_CODE_DETAILS%'
-            # Connection termination details
-            connectionTerminationDetails: '%CONNECTION_TERMINATION_DETAILS%'
-            # Total duration in milliseconds of the request from the start time to the first byte read from the upstream host
-            targetDuration: '%RESPONSE_DURATION%'
-            # Value of the "x-envoy-original-path" header (falls back to "path" header if not present)
-            path: '%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%'
-            # Upstream cluster to which the upstream host belongs to
-            upstreamName: '%UPSTREAM_CLUSTER%'
-            # Unique tracking ID
-            requestId: '%REQ(X-REQUEST-ID)%'
-            # Response flags; will contain details about the response or connectiuon
-            responseFlags: '%RESPONSE_FLAGS%'
-            # Name of the route
-            routeName: `%ROUTE_NAME%`
-            # Remote address of the requester
-            downstreamRemoteAddress: '%DOWNSTREAM_REMOTE_ADDRESS%'
-            # Upstream host url
-            upstreamHost: '%UPSTREAM_HOST%'
-            # URIs present on the SAN of the local certificate used to establish downstream TLS
-            downstreamLocalURISan: '%DOWNSTREAM_LOCAL_URI_SAN%'
-      }
-    defaultConfig:
-      discoveryAddress: istiod.istio-system.svc:15012
-      tracing:
-        zipkin:
-          address: zipkin.istio-system:9411
-    enablePrometheusMerge: true
-    rootNamespace: null
-    trustDomain: cluster.local
-  meshNetworks: 'networks: {}'
-kind: ConfigMap
-metadata:
-  name: istio
-  namespace: istio-system
-EOF
-```
-- Rollout the istio deployment: `kubectl rollout restart deploy/istio -n istio-system`
-- Run `minikube-tunnel` in a different terminal.
-- Run the requests again
-- Check the Access Logs
-
-**Cleanup**
-```
-minikube delete
-```
-
-Kill the terminal running `minikube tunnel`
-
-## Part 2 - HELM
-### Configuring Access Logging through helm
-A better approach would be one that adheres to the principals of infrastructure as code. In the previous example we installed Istio using a demo profile which is not recommended for production, and we would have to manually make these changes to the config map everytime we install Istio in order to achieve this result. A more sophistacated approach would be to install Istio through the helm chart.   
+## Part 3 - Configuration through Helm values file
+A better approach would adhere to the principals of infrastructure as code and devops. In the previous example we installed Istio using a demo profile which is not recommended for production, and we would have to manually make these changes to the config map everytime we install Istio in order to achieve this result. A more sophistacated approach would be to install Istio through the helm chart.   
 
 We are going to download the istio release and change into the directory
 ```
@@ -413,194 +204,8 @@ Install thge base chart which contains cluster-wide resources used by the istio 
 helm install istio-base manifests/charts/base -n istio-system
 ```
 
-Edit the `manifests/charts/istio-control/istio-discovery/values.yaml` file, make sure the final result looks like this, where we can added configuration for the `meshConfig` sections for `accessLogEncoding: JSON` and `accessLogFormat`.
+Edit the `manifests/charts/istio-control/istio-discovery/values.yaml` file, make sure the  `meshConfig` has `accessLogEncoding: JSON` and `accessLogFormat`. The final result of the `meshConfig` section should look exactly like the only below.
 ```
-#.Values.pilot for discovery and mesh wide config
-
-## Discovery Settings
-pilot:
-  autoscaleEnabled: true
-  autoscaleMin: 1
-  autoscaleMax: 5
-  replicaCount: 1
-  rollingMaxSurge: 100%
-  rollingMaxUnavailable: 25%
-
-  hub: ""
-  tag: ""
-
-  # Can be a full hub/image:tag
-  image: pilot
-  traceSampling: 1.0
-
-  # Resources for a small pilot install
-  resources:
-    requests:
-      cpu: 500m
-      memory: 2048Mi
-
-  env: {}
-
-  cpu:
-    targetAverageUtilization: 80
-
-  # if protocol sniffing is enabled for outbound
-  enableProtocolSniffingForOutbound: true
-  # if protocol sniffing is enabled for inbound
-  enableProtocolSniffingForInbound: true
-
-  nodeSelector: {}
-  podAnnotations: {}
-
-  # You can use jwksResolverExtraRootCA to provide a root certificate
-  # in PEM format. This will then be trusted by pilot when resolving
-  # JWKS URIs.
-  jwksResolverExtraRootCA: ""
-
-  # This is used to set the source of configuration for
-  # the associated address in configSource, if nothing is specificed
-  # the default MCP is assumed.
-  configSource:
-    subscribedResources: []
-
-  plugins: []
-
-  # The following is used to limit how long a sidecar can be connected
-  # to a pilot. It balances out load across pilot instances at the cost of
-  # increasing system churn.
-  keepaliveMaxServerConnectionAge: 30m
-
-  # Additional labels to apply to the deployment.
-  deploymentLabels: {}
-
-
-  ## Mesh config settings
-
-  # Install the mesh config map, generated from values.yaml.
-  # If false, pilot wil use default values (by default) or user-supplied values.
-  configMap: true
-
-
-sidecarInjectorWebhook:
-  # You can use the field called alwaysInjectSelector and neverInjectSelector which will always inject the sidecar or
-  # always skip the injection on pods that match that label selector, regardless of the global policy.
-  # See https://istio.io/docs/setup/kubernetes/additional-setup/sidecar-injection/#more-control-adding-exceptions
-  neverInjectSelector: []
-  alwaysInjectSelector: []
-
-  # injectedAnnotations are additional annotations that will be added to the pod spec after injection
-  # This is primarily to support PSP annotations. For example, if you defined a PSP with the annotations:
-  #
-  # annotations:
-  #   apparmor.security.beta.kubernetes.io/allowedProfileNames: runtime/default
-  #   apparmor.security.beta.kubernetes.io/defaultProfileName: runtime/default
-  #
-  # The PSP controller would add corresponding annotations to the pod spec for each container. However, this happens before
-  # the inject adds additional containers, so we must specify them explicitly here. With the above example, we could specify:
-  # injectedAnnotations:
-  #   container.apparmor.security.beta.kubernetes.io/istio-init: runtime/default
-  #   container.apparmor.security.beta.kubernetes.io/istio-proxy: runtime/default
-  injectedAnnotations: {}
-
-  # This enables injection of sidecar in all namespaces,
-  # with the exception of namespaces with "istio-injection:disabled" annotation
-  # Only one environment should have this enabled.
-  enableNamespacesByDefault: false
-
-  # Enable objectSelector to filter out pods with no need for sidecar before calling istiod.
-  # It is enabled by default as the minimum supported Kubernetes version is 1.15+
-  objectSelector:
-    enabled: true
-    autoInject: true
-
-  rewriteAppHTTPProbe: true
-
-  # Templates defines a set of custom injection templates that can be used. For example, defining:
-  #
-  # templates:
-  #   hello: |
-  #     metadata:
-  #       labels:
-  #         hello: world
-  #
-  # Then starting a pod with the `inject.istio.io/templates: hello` annotation, will result in the pod
-  # being injected with the hello=world labels.
-  # This is intended for advanced configuration only; most users should use the built in template
-  templates: {}
-
-  # Default templates specifies a set of default templates that are used in sidecar injection.
-  # By default, a template `sidecar` is always provided, which contains the template of default sidecar.
-  # To inject other additional templates, define it using the `templates` option, and add it to
-  # the default templates list.
-  # For example:
-  #
-  # templates:
-  #   hello: |
-  #     metadata:
-  #       labels:
-  #         hello: world
-  #
-  # defaultTemplates: ["sidecar", "hello"]
-  defaultTemplates: []
-istiodRemote:
-  # Sidecar injector mutating webhook configuration clientConfig.url value.
-  # For example: https://$remotePilotAddress:15017/inject
-  # The host should not refer to a service running in the cluster; use a service reference by specifying
-  # the clientConfig.service field instead.
-  injectionURL: ""
-
-  # Sidecar injector mutating webhook configuration path value for the clientConfig.service field.
-  # Override to pass env variables, for example: /inject/cluster/remote/net/network2
-  injectionPath: "/inject"
-telemetry:
-  enabled: true
-  v2:
-    # For Null VM case now.
-    # This also enables metadata exchange.
-    enabled: true
-    metadataExchange:
-      # Indicates whether to enable WebAssembly runtime for metadata exchange filter.
-      wasmEnabled: false
-    # Indicate if prometheus stats filter is enabled or not
-    prometheus:
-      enabled: true
-      # Indicates whether to enable WebAssembly runtime for stats filter.
-      wasmEnabled: false
-      # overrides stats EnvoyFilter configuration.
-      configOverride:
-        gateway: {}
-        inboundSidecar: {}
-        outboundSidecar: {}
-    # stackdriver filter settings.
-    stackdriver:
-      enabled: false
-      logging: false
-      monitoring: false
-      topology: false # deprecated. setting this to true will have no effect, as this option is no longer supported.
-      disableOutbound: false
-      #  configOverride parts give you the ability to override the low level configuration params passed to envoy filter.
-
-      configOverride: {}
-      #  e.g.
-      #  disable_server_access_logging: false
-      #  disable_host_header_fallback: true
-    # Access Log Policy Filter Settings. This enables filtering of access logs from stackdriver.
-    accessLogPolicy:
-      enabled: false
-      # To reduce the number of successful logs, default log window duration is
-      # set to 12 hours.
-      logWindowDuration: "43200s"
-# Revision is set as 'version' label and part of the resource names when installing multiple control planes.
-revision: ""
-
-# Revision tags are aliases to Istio control plane revisions
-revisionTags: []
-
-# For Helm compatibility.
-ownerName: ""
-
-# meshConfig defines runtime configuration of components, including Istiod and istio-agent behavior
-# See https://istio.io/docs/reference/config/istio.mesh.v1alpha1/ for all available options
 meshConfig:
   accessLogFile: /dev/stdout
   accessLogEncoding: JSON
@@ -641,347 +246,7 @@ meshConfig:
             upstreamHost: '%UPSTREAM_HOST%'
             # URIs present on the SAN of the local certificate used to establish downstream TLS
             downstreamLocalURISan: '%DOWNSTREAM_LOCAL_URI_SAN%'
-
       }
-
-  enablePrometheusMerge: true
-  # Config for the default ProxyConfig.
-  # Initially using directly the proxy metadata - can also be activated using annotations
-  # on the pod. This is an unsupported low-level API, pending review and decisions on
-  # enabling the feature. Enabling the DNS listener is safe - and allows further testing
-  # and gradual adoption by setting capture only on specific workloads. It also allows
-  # VMs to use other DNS options, like dnsmasq or unbound.
-
-  # The namespace to treat as the administrative root namespace for Istio configuration.
-  # When processing a leaf namespace Istio will search for declarations in that namespace first
-  # and if none are found it will search in the root namespace. Any matching declaration found in the root namespace
-  # is processed as if it were declared in the leaf namespace.
-
-  rootNamespace:
-
-  # The trust domain corresponds to the trust root of a system
-  # Refer to https://github.com/spiffe/spiffe/blob/master/standards/SPIFFE-ID.md#21-trust-domain
-  trustDomain: "cluster.local"
-
-  # TODO: the intent is to eventually have this enabled by default when security is used.
-  # It is not clear if user should normally need to configure - the metadata is typically
-  # used as an escape and to control testing and rollout, but it is not intended as a long-term
-  # stable API.
-
-  # What we may configure in mesh config is the ".global" - and use of other suffixes.
-  # No hurry to do this in 1.6, we're trying to prove the code.
-
-global:
-  # Used to locate istiod.
-  istioNamespace: istio-system
-  # enable pod disruption budget for the control plane, which is used to
-  # ensure Istio control plane components are gradually upgraded or recovered.
-  defaultPodDisruptionBudget:
-    enabled: true
-    # The values aren't mutable due to a current PodDisruptionBudget limitation
-    # minAvailable: 1
-
-  # A minimal set of requested resources to applied to all deployments so that
-  # Horizontal Pod Autoscaler will be able to function (if set).
-  # Each component can overwrite these default values by adding its own resources
-  # block in the relevant section below and setting the desired resources values.
-  defaultResources:
-    requests:
-      cpu: 10m
-    #   memory: 128Mi
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  # Default hub for Istio images.
-  # Releases are published to docker hub under 'istio' project.
-  # Dev builds from prow are on gcr.io
-  hub: docker.io/istio
-  # Default tag for Istio images.
-  tag: 1.11.0
-
-  # Specify image pull policy if default behavior isn't desired.
-  # Default behavior: latest images will be Always else IfNotPresent.
-  imagePullPolicy: ""
-
-  # ImagePullSecrets for all ServiceAccount, list of secrets in the same namespace
-  # to use for pulling any images in pods that reference this ServiceAccount.
-  # For components that don't use ServiceAccounts (i.e. grafana, servicegraph, tracing)
-  # ImagePullSecrets will be added to the corresponding Deployment(StatefulSet) objects.
-  # Must be set for any cluster configured with private docker registry.
-  imagePullSecrets: []
-  # - private-registry-key
-
-  # Enabled by default in master for maximising testing.
-  istiod:
-    enableAnalysis: false
-
-  # To output all istio components logs in json format by adding --log_as_json argument to each container argument
-  logAsJson: false
-
-  # Comma-separated minimum per-scope logging level of messages to output, in the form of <scope>:<level>,<scope>:<level>
-  # The control plane has different scopes depending on component, but can configure default log level across all components
-  # If empty, default scope and level will be used as configured in code
-  logging:
-    level: "default:info"
-
-  omitSidecarInjectorConfigMap: false
-
-  # Whether to restrict the applications namespace the controller manages;
-  # If not set, controller watches all namespaces
-  oneNamespace: false
-
-  # Configure whether Operator manages webhook configurations. The current behavior
-  # of Istiod is to manage its own webhook configurations.
-  # When this option is set as true, Istio Operator, instead of webhooks, manages the
-  # webhook configurations. When this option is set as false, webhooks manage their
-  # own webhook configurations.
-  operatorManageWebhooks: false
-
-  # Custom DNS config for the pod to resolve names of services in other
-  # clusters. Use this to add additional search domains, and other settings.
-  # see
-  # https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#dns-config
-  # This does not apply to gateway pods as they typically need a different
-  # set of DNS settings than the normal application pods (e.g., in
-  # multicluster scenarios).
-  # NOTE: If using templates, follow the pattern in the commented example below.
-  #podDNSSearchNamespaces:
-  #- global
-  #- "{{ valueOrDefault .DeploymentMeta.Namespace \"default\" }}.global"
-
-  # Kubernetes >=v1.11.0 will create two PriorityClass, including system-cluster-critical and
-  # system-node-critical, it is better to configure this in order to make sure your Istio pods
-  # will not be killed because of low priority class.
-  # Refer to https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
-  # for more detail.
-  priorityClassName: ""
-
-  proxy:
-    image: proxyv2
-
-    # This controls the 'policy' in the sidecar injector.
-    autoInject: enabled
-
-    # CAUTION: It is important to ensure that all Istio helm charts specify the same clusterDomain value
-    # cluster domain. Default value is "cluster.local".
-    clusterDomain: "cluster.local"
-
-    # Per Component log level for proxy, applies to gateways and sidecars. If a component level is
-    # not set, then the global "logLevel" will be used.
-    componentLogLevel: "misc:error"
-
-    # If set, newly injected sidecars will have core dumps enabled.
-    enableCoreDump: false
-
-    # istio ingress capture allowlist
-    # examples:
-    #     Redirect only selected ports:            --includeInboundPorts="80,8080"
-    excludeInboundPorts: ""
-
-    # istio egress capture allowlist
-    # https://istio.io/docs/tasks/traffic-management/egress.html#calling-external-services-directly
-    # example: includeIPRanges: "172.30.0.0/16,172.20.0.0/16"
-    # would only capture egress traffic on those two IP Ranges, all other outbound traffic would
-    # be allowed by the sidecar
-    includeIPRanges: "*"
-    excludeIPRanges: ""
-    excludeOutboundPorts: ""
-
-    # Log level for proxy, applies to gateways and sidecars.
-    # Expected values are: trace|debug|info|warning|error|critical|off
-    logLevel: warning
-
-    #If set to true, istio-proxy container will have privileged securityContext
-    privileged: false
-
-    # The number of successive failed probes before indicating readiness failure.
-    readinessFailureThreshold: 30
-
-    # The initial delay for readiness probes in seconds.
-    readinessInitialDelaySeconds: 1
-
-    # The period between readiness probes.
-    readinessPeriodSeconds: 2
-
-    # Resources for the sidecar.
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 2000m
-        memory: 1024Mi
-
-    # Default port for Pilot agent health checks. A value of 0 will disable health checking.
-    statusPort: 15020
-
-    # Specify which tracer to use. One of: zipkin, lightstep, datadog, stackdriver.
-    # If using stackdriver tracer outside GCP, set env GOOGLE_APPLICATION_CREDENTIALS to the GCP credential file.
-    tracer: "zipkin"
-
-    # Controls if sidecar is injected at the front of the container list and blocks the start of the other containers until the proxy is ready
-    holdApplicationUntilProxyStarts: false
-
-  proxy_init:
-    # Base name for the proxy_init container, used to configure iptables.
-    image: proxyv2
-    resources:
-      limits:
-        cpu: 2000m
-        memory: 1024Mi
-      requests:
-        cpu: 10m
-        memory: 10Mi
-
-  # configure remote pilot and istiod service and endpoint
-  remotePilotAddress: ""
-
-  ##############################################################################################
-  # The following values are found in other charts. To effectively modify these values, make   #
-  # make sure they are consistent across your Istio helm charts                                #
-  ##############################################################################################
-
-  # The customized CA address to retrieve certificates for the pods in the cluster.
-  # CSR clients such as the Istio Agent and ingress gateways can use this to specify the CA endpoint.
-  # If not set explicitly, default to the Istio discovery address.
-  caAddress: ""
-
-  # Configure a remote cluster data plane controlled by an external istiod.
-  # When set to true, istiod is not deployed locally and only a subset of the other
-  # discovery charts are enabled.
-  externalIstiod: false
-
-  #  Configure a remote cluster as the config cluster for an external istiod.
-  configCluster: false
-
-  # Configure the policy for validating JWT.
-  # Currently, two options are supported: "third-party-jwt" and "first-party-jwt".
-  jwtPolicy: "third-party-jwt"
-
-  # Mesh ID means Mesh Identifier. It should be unique within the scope where
-  # meshes will interact with each other, but it is not required to be
-  # globally/universally unique. For example, if any of the following are true,
-  # then two meshes must have different Mesh IDs:
-  # - Meshes will have their telemetry aggregated in one place
-  # - Meshes will be federated together
-  # - Policy will be written referencing one mesh from the other
-  #
-  # If an administrator expects that any of these conditions may become true in
-  # the future, they should ensure their meshes have different Mesh IDs
-  # assigned.
-  #
-  # Within a multicluster mesh, each cluster must be (manually or auto)
-  # configured to have the same Mesh ID value. If an existing cluster 'joins' a
-  # multicluster mesh, it will need to be migrated to the new mesh ID. Details
-  # of migration TBD, and it may be a disruptive operation to change the Mesh
-  # ID post-install.
-  #
-  # If the mesh admin does not specify a value, Istio will use the value of the
-  # mesh's Trust Domain. The best practice is to select a proper Trust Domain
-  # value.
-  meshID: ""
-
-  # Configure the mesh networks to be used by the Split Horizon EDS.
-  #
-  # The following example defines two networks with different endpoints association methods.
-  # For `network1` all endpoints that their IP belongs to the provided CIDR range will be
-  # mapped to network1. The gateway for this network example is specified by its public IP
-  # address and port.
-  # The second network, `network2`, in this example is defined differently with all endpoints
-  # retrieved through the specified Multi-Cluster registry being mapped to network2. The
-  # gateway is also defined differently with the name of the gateway service on the remote
-  # cluster. The public IP for the gateway will be determined from that remote service (only
-  # LoadBalancer gateway service type is currently supported, for a NodePort type gateway service,
-  # it still need to be configured manually).
-  #
-  # meshNetworks:
-  #   network1:
-  #     endpoints:
-  #     - fromCidr: "192.168.0.1/24"
-  #     gateways:
-  #     - address: 1.1.1.1
-  #       port: 80
-  #   network2:
-  #     endpoints:
-  #     - fromRegistry: reg1
-  #     gateways:
-  #     - registryServiceName: istio-ingressgateway.istio-system.svc.cluster.local
-  #       port: 443
-  #
-  meshNetworks: {}
-
-  # Use the user-specified, secret volume mounted key and certs for Pilot and workloads.
-  mountMtlsCerts: false
-
-  multiCluster:
-    # Set to true to connect two kubernetes clusters via their respective
-    # ingressgateway services when pods in each cluster cannot directly
-    # talk to one another. All clusters should be using Istio mTLS and must
-    # have a shared root CA for this model to work.
-    enabled: false
-    # Should be set to the name of the cluster this installation will run in. This is required for sidecar injection
-    # to properly label proxies
-    clusterName: ""
-
-  # Network defines the network this cluster belong to. This name
-  # corresponds to the networks in the map of mesh networks.
-  network: ""
-
-  # Configure the certificate provider for control plane communication.
-  # Currently, two providers are supported: "kubernetes" and "istiod".
-  # As some platforms may not have kubernetes signing APIs,
-  # Istiod is the default
-  pilotCertProvider: istiod
-
-  sds:
-    # The JWT token for SDS and the aud field of such JWT. See RFC 7519, section 4.1.3.
-    # When a CSR is sent from Istio Agent to the CA (e.g. Istiod), this aud is to make sure the
-    # JWT is intended for the CA.
-    token:
-      aud: istio-ca
-
-  sts:
-    # The service port used by Security Token Service (STS) server to handle token exchange requests.
-    # Setting this port to a non-zero value enables STS server.
-    servicePort: 0
-
-  # Configuration for each of the supported tracers
-  tracer:
-    # Configuration for envoy to send trace data to LightStep.
-    # Disabled by default.
-    # address: the <host>:<port> of the satellite pool
-    # accessToken: required for sending data to the pool
-    #
-    datadog:
-      # Host:Port for submitting traces to the Datadog agent.
-      address: "$(HOST_IP):8126"
-    lightstep:
-      address: ""                # example: lightstep-satellite:443
-      accessToken: ""            # example: abcdefg1234567
-    stackdriver:
-      # enables trace output to stdout.
-      debug: false
-      # The global default max number of message events per span.
-      maxNumberOfMessageEvents: 200
-      # The global default max number of annotation events per span.
-      maxNumberOfAnnotations: 200
-      # The global default max number of attributes per span.
-      maxNumberOfAttributes: 200
-    zipkin:
-      # Host:Port for reporting trace data in zipkin format. If not specified, will default to
-      # zipkin service (port 9411) in the same namespace as the other istio components.
-      address: ""
-
-  # Use the Mesh Control Protocol (MCP) for configuring Istiod. Requires an MCP source.
-  useMCP: false
-
-  # Determines whether this istiod performs resource validation.
-  configValidation: true
-
-base:
-  # For istioctl usage to disable istio config crds in base
-  enableIstioConfigCRDs: true
 ```
 
 Now we can install the helm chart for the Istio control-plane:
@@ -996,107 +261,11 @@ helm install istio-ingress manifests/charts/gateways/istio-ingress \
     -n istio-system
 ```
 
-This concludes the installation of Istio through the helm chart, now lets test by adding a virtual service, gateway, and an app.
-
+This concludes the installation of Istio through the helm chart, now lets test by checking the `configmap/istio` in `istio-system` to verify that the config map was created properly.
 ```
-kubectl apply -f -<<EOF
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: default
-spec:
-  selector:
-    istio: ingressgateway
-  servers:
-  - port:
-      number: 80
-      name: http
-      protocol: HTTP
-    hosts:
-    - "*"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: default
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - default
-  http:
-  - match:
-    - uri:
-        exact: /get
-    route:
-    - destination:
-        host: httpbin
-        port:
-          number: 8000
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: httpbin
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: httpbin
-  labels:
-    app: httpbin
-    service: httpbin
-spec:
-  ports:
-  - name: http
-    port: 8000
-    targetPort: 80
-  selector:
-    app: httpbin
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: httpbin
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: httpbin
-      version: v1
-  template:
-    metadata:
-      labels:
-        app: httpbin
-        version: v1
-    spec:
-      serviceAccountName: httpbin
-      containers:
-      - image: docker.io/kennethreitz/httpbin
-        imagePullPolicy: IfNotPresent
-        name: httpbin
-        ports:
-        - containerPort: 80
-EOF
+kubectl get cm/istio -n istio-system -oyaml
 ```
 
+If your config map has the accessLogFormat and accessLogEncoding then you have succeeded!
 
-Now, we need to give the istio-ingressgateway service a LoadBalancer to use. We can do this by opening a new terminal, and running `minikube tunnel`.
-
-After starting `minikube tunnel` in a separate terminal, we need to run requests against the gateway so we can verify that our access logs are working.
-
-```
-for z in {0..29};do curl http://localhost/get; done  
-```
-
-Now, lets check the access logs:
-```
-kubectl logs svc/istio-ingressgateway -n istio-system --tail=20 | jq 
-```
-
-**Clean Up**
-```
-minikube delete
-```
-
-_This concludes access logging in Istio. Reach out via email if you have questions related to the post._
+The End!
