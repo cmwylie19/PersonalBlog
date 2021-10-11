@@ -193,7 +193,7 @@ Download the JSON keyfile for the service account and delete after:
 gcloud iam service-accounts keys create key.json --iam-account=$SA_EMAIL
 ```
 
-Set GKE_SA_KEY to the value of the `key.json` file that was generated for you, and copy
+Set `GKE_SA_KEY` to the value of the `key.json` file that was generated for you, and copy
 ```
 export GKE_SA_KEY=$(cat key.json | base64)
 echo $GKE_SA_KEY | pbcopy

@@ -1,0 +1,297 @@
+---
+title: Automate Staging Environments
+date: "2021-10-11T22:40:32.169Z"
+description: In the world of modern cloud applications, environments are disposable, identical, easy to provision, and belong in a repository as infrastructure as code. Whether you need to spin up a cluster for a new engineer, or add a staging environment, the process should be as painless as running a script. I'm going to show you how to provision a GKE cluster from scratch using ansible.
+---
+
+ # Background
+You are an SRE, responsible for the well-being of a successful finance application. 
+   
+Clients download your application with a license and use it in their own environments. 
+   
+You have a thorough pipeline testing your application. It unit tests the code, runs integration tests, security tests/scans, has distribute tracing and logging and collects metrics at every step of the way and stores them in dashboards to make errors visible but this time, _it's not enough._
+    
+The problem is, clients are reporting that the application pods are consuming huge amounts of CPU/Memory during peak hours of usage. **You can't reproduce**.
+   
+The CTO tells you that you need of a soak clusters to match the behavior of customer environments during peak usage to figure out what is going on with the CPU/Memory.
+
+**Solution**- Be able to spin up environments that match production as easy as as it is to eat icecream on a warm summer day. 
+
+![Summer](Summer.png)
+
+
+---
+_Solution_: Use ansible automation platform to spin up an Environment.
+
+## To do list
+- Create a Repo and Scaffolding
+- Get your GKE project ID
+- Create a Service Account
+- Assign roles to the service account
+- Create an ansible playbook
+- Run the playbook
+
+## Create a Repo and Scaffolding
+Creating a repo containing the scaffolding for this project.
+```
+mkdir automate-gke-cluster
+
+cd automate-gke-cluster
+
+mkdir ansible ansible/files \
+ansible/inventory ansible/roles \
+ansible/roles/create-cluster/tasks ansible/roles/destroy-cluster/tasks \
+ansible/roles/create-network ansible/roles/create-network/tasks \
+ansible/roles/destroy-network ansible/roles/destroy-network/tasks \
+
+```
+## Get your GKE project ID
+Easy step. Just get your GKE_PROJECT and assign a variable to it.
+
+```
+gcloud projects list
+```
+
+Assign GKE_PROJECT to the project ID that we are going to use:
+```
+GKE_PROJECT=some-project-12345  
+```
+
+
+## Create a Service Account
+We need a service account that is capable of spinning up/destroying clusters. I like to create a new service account for each function to minimize attack service area that would occur if an account was compromised. The best approach is a just enough access approach. 
+
+Create a fresh service account with no roles, call it `deployer-sa`:
+```
+gcloud iam service-accounts create deployer-sa 
+```
+
+## Assign roles to the service account
+We give our brand new service account the ability to create clusters by assigning roles to it. The following roles I found based on trail and error:
+
+```
+# Assign SA_EMAIL to value of service account email
+SA_EMAIL=$(gcloud iam service-accounts list \
+| grep deployer-sa |  \
+awk '{print $1}')
+
+gcloud projects add-iam-policy-binding $GKE_PROJECT \
+  --member=serviceAccount:$SA_EMAIL \
+  --role=roles/container.admin \
+  --role=roles/storage.admin \
+  --role=roles/compute.admin \
+  --role=roles/container.clusterAdmin \
+  --role=roles/iam.serviceAccountUser
+```
+
+Download the `JSON` keyfile for the service account:
+```
+gcloud iam service-accounts keys create key.json \
+--iam-account=$SA_EMAIL
+
+# Move it to the `ansible/files` directory to use with playbook
+mv key.json ansible/files/deployer-sa.json
+
+# Create a git ignore so we dont accidently check this into the repo
+cat <<EOF> .gitignore
+# Ansible inventory
+ansible/inventory/gcp.yaml 
+
+# Service Account
+ansible/files/deployer-sa.json
+EOF
+```
+
+## Create an ansible playbook
+Now for this section, we build out the `inventory`, `roles`, `ansible.cfg`, and the `playbook`.
+
+Lets start out with  the basics, we need an `ansible.cfg` file to set some sensible defaults.
+```
+cd ansible
+
+cat <<EOF > ansible.cfg
+[defaults]
+# human-readable stdout/stderr results display [debug/yaml]
+stdout_callback = yaml
+
+# This points to the file that lists your hosts
+inventory=inventory/gcp.yaml
+
+# File to which Ansible will log on the controller. When empty logging is disabled.
+log_path = ~/ansible.log
+EOF
+```
+
+Next, we are referencing an `inventory/gcp.yaml` file but we dont have one yet.
+
+Before jumping to the inventory, make sure you assign `gcloud_sa_path` the correct location based on your project directory. The one listed may not work for you. 
+```
+# In the invetory directory
+cd inventory
+
+cat <<EOF > gcp.yaml
+all:
+  vars:
+    # use this section to enter GCP related information
+    zone: "us-east1-b" 
+    region: "us-east1"
+    project_id: "your-project-1234"
+    gcloud_sa_path: "/automate-gke-cluster/ansible/files/deployer-sa.json"
+    credentials_file: "{{ lookup('env','HOME') }}/{{ gcloud_sa_path }}"
+    gcloud_service_account: "deployer-sa@your-project-1234.iam.gserviceaccount.com"
+
+    # use the section below to enter k8s cluster related information
+    cluster_name: "my-cluster-soak"
+    initial_node_count: 3
+    disk_size_gb: 100
+    disk_type: "pd-ssd"
+    machine_type: "e2-medium"
+
+EOF
+```
+
+Now, lets create the roles for deploying/deleting clusters:
+```
+# Change into the roles directory
+cd ../roles/create_cluster/tasks
+
+cat <<EOF> main.yaml
+---
+- name: create cluster
+  google.cloud.gcp_container_cluster:
+    name: "{{ cluster_name }}"
+    initial_node_count: "{{ initial_node_count }}"
+    location: "{{ zone }}"
+    network: "{{ network.name }}"
+    network_policy:
+      enabled: true
+      provider: "CALICO"
+    project: "{{ project_id }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ credentials_file }}"
+    state: present
+  register: cluster
+
+- name: create node pool
+  google.cloud.gcp_container_node_pool:
+    name: "node-pool-{{ cluster_name }}"
+    initial_node_count: "{{ initial_node_count }}"
+    cluster: "{{ cluster }}"
+    config:
+      disk_size_gb: "{{ disk_size_gb }}"
+      disk_type: "{{ disk_type }}"
+      machine_type: "{{ machine_type }}"
+    location: "{{ zone }}"
+    project: "{{ project_id }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ credentials_file }}"
+    state: present
+EOF
+
+# Destroy cluster role
+cd ../../destroy_cluster/tasks
+
+cat <<EOF> main.yaml
+---
+- name: destroy cluster
+  google.cloud.gcp_container_cluster:
+    name: "{{ cluster_name }}"
+    location: "{{ zone }}"
+    project: "{{ project_id }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ credentials_file }}"
+    state: absent
+EOF
+
+
+# Change back to the the ansible directory
+cd ../../create-network/tasks
+
+# Create the role to build a network in GKE
+cat <<EOF> main.yaml
+- name: create network
+  google.cloud.gcp_compute_network:
+    name: network-{{ cluster_name }}
+    auto_create_subnetworks: 'true'
+    project: "{{ project_id }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ credentials_file }}"
+    state: present
+  register: network
+EOF
+
+# Change to the destroy network role tasks
+cd ../../destroy-network/tasks
+
+# Create the role to destroy the network
+cat <<EOF> main.yaml
+- name: destroy GCP network
+  google.cloud.gcp_compute_network:
+    name: network-{{ cluster_name }}
+    auto_create_subnetworks: 'true'
+    project: "{{ project_id }}"
+    auth_kind: serviceaccount
+    service_account_file: "{{ credentials_file }}"
+    state: absent
+EOF
+
+# Change to the base ansible directory
+cd ../../.. 
+```
+
+## Create an ansible playbook
+Now finally, lets leverage these roles in a playbook. We will actually create two playbooks, one for creating the cluster and one for destroying the cluster.
+
+```
+# Create cluster playbook
+cat <<EOF> create-cluster.yaml
+---
+- name: deploy cluster
+  hosts: localhost
+  gather_facts: false
+  environment:
+    GOOGLE_CREDENTIALS: "{{ credentials_file }}"
+
+  roles:
+    - create-network
+    - create-cluster
+EOF
+
+# Delete cluster playbook
+cat <<EOF> destroy-cluster.yaml
+---
+- name: destroy infra
+  hosts: localhost
+  gather_facts: false
+  environment:
+    GOOGLE_CREDENTIALS: "{{ credentials_file }}"
+
+  roles:
+    - destroy-cluster
+    - destroy-network
+EOF
+
+# go back to the base directory
+cd ..
+```
+
+## Run the playbook
+From the base directory of the repo, run the playbook.
+
+Create the soak cluster
+```
+ansible-playbook ansible/create-cluster.yaml -i ansible/inventory/gcp.yaml 
+```
+
+
+Delete the soak cluster
+```
+ansible-playbook ansible/destroy-cluster.yaml -i ansible/inventory/gcp.yaml 
+```
+
+## Retrospective
+This automation would be a lot easier using a bash script admittedly, in fact, it is a much more straight forward option. The only reason i would recommend using ansible here is if you have a larger usecase for automation other than simply spinning up environments. Ansible is great in configuring VMs, applications, you can even use it to create simple kubernetes operators. You could write an ansible playbook to deploy infrastructure and applications together. I never had a favorite between ansible and terraform but now I prefer ansible due to flexibility and functionality. 
+
+## References
+[Repo Source Code](https://github.com/cmwylie19/automate-gke-cluster)   
+[Anisble GCE Guide](https://docs.ansible.com/ansible/latest/scenario_guides/guide_gce.html)
