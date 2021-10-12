@@ -1,5 +1,5 @@
 ---
-title: Automate Staging Environments
+title: Automate Staging Environments (Ansible)
 date: "2021-10-11T22:40:32.169Z"
 description: In the world of modern cloud applications, environments are disposable, identical, easy to provision, and belong in a repository as infrastructure as code. Whether you need to spin up a cluster for a new engineer, or add a staging environment, the process should be as painless as running a script. I'm going to show you how to provision a GKE cluster from scratch using ansible.
 ---
