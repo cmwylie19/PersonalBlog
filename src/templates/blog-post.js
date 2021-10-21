@@ -1,15 +1,23 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Link, graphql } from "gatsby"
-
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
+import API from "../utils/Api"
+import Bio from "../components/bio"
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
+
+  // useEffect(() => {
+  //   const api = new API(process.env.REACT_APP_METRICS_EP)
+  //   api.logURL()
+  //   console.log(`Env is ${process.env.NODE_ENV}`)
+  //   api.recordPost(location.pathname)
+  //   console.log(`Location: ${JSON.stringify(location.pathname)}`)
+  // }, [])
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -46,7 +54,8 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
               fontFamily: "'Montserrat', sans-serif",
             }}
           >
-            <b>Description: </b>{post.frontmatter.description}
+            <b>Description: </b>
+            {post.frontmatter.description}
           </p>
         </header>
         <section dangerouslySetInnerHTML={{ __html: post.html }} />
@@ -55,9 +64,9 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
             marginBottom: rhythm(1),
           }}
         />
-        {/* <footer>
+        <footer>
           <Bio />
-        </footer> */}
+        </footer>
       </article>
 
       <nav>

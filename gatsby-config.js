@@ -1,14 +1,18 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 module.exports = {
   siteMetadata: {
     title: `Casey Wylie`,
     author: {
       name: `Casey Wylie`,
-      summary: `Written by Casey Wylie, a Kubernetes Platform Architect and Senior Software Engineer in Raleigh NC. Who works on cloud native things and blog about it on occasion, and is a self proclaimed mac and cheese connoisseur.`,
+      summary: `Written by Casey Wylie, a Kubernetes Platform Architect who lives and works in Raleigh building and automating distributed systems.`,
     },
     description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
     siteUrl: `http://cmwylie19.github.io/`,
     social: {
       twitter: `cmwylie19`,
+      github: `cmwylie19`
     },
   },
   plugins: [

@@ -1,10 +1,11 @@
 {
-  "name": "CaseyWylieBlog",
+  "name": "peronsal_blog",
   "private": true,
   "description": "Casey Wylie Personal Blog",
   "version": "0.1.0",
   "author": "Case Wylie <casewylie@gmail.com>",
   "dependencies": {
+    "crypto": "^1.0.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "gatsby": "^2.20.12",

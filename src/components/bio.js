@@ -44,11 +44,9 @@ const Bio = () => {
         style={{
           marginRight: rhythm(1 / 2),
           marginBottom: 0,
-          minWidth: 90,
-          height:90
-
-          // height:
-          // borderRadius: `15px`
+          maxWidth: 50,
+          height:50,
+          borderRadius: `15px`
         }}
         imgStyle={{
           borderRadius: `50%`,
