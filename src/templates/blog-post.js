@@ -11,13 +11,13 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
   const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
 
-  // useEffect(() => {
-  //   const api = new API(process.env.REACT_APP_METRICS_EP)
-  //   api.logURL()
-  //   console.log(`Env is ${process.env.NODE_ENV}`)
-  //   api.recordPost(location.pathname)
-  //   console.log(`Location: ${JSON.stringify(location.pathname)}`)
-  // }, [])
+  useEffect(() => {
+    const api = new API(process.env.REACT_APP_METRICS_EP)
+    api.logURL()
+    console.log(`EP is ${process.env.REACT_APP_METRICS_EP}`)
+    console.log(`SECRET is ${process.env.API_SECRET}`)
+    api.recordPost(location.pathname)
+  }, [])
 
   return (
     <Layout location={location} title={siteTitle}>
