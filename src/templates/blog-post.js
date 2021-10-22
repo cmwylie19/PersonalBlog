@@ -12,10 +12,8 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
   const { previous, next } = pageContext
 
   useEffect(() => {
-    const api = new API(process.env.REACT_APP_METRICS_EP)
+    const api = new API(`https://freshlist.us`)
     api.logURL()
-    console.log(`EP is ${process.env.REACT_APP_METRICS_EP}`)
-    console.log(`SECRET is ${process.env.API_SECRET}`)
     api.recordPost(location.pathname)
   }, [])
 
