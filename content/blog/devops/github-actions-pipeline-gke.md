@@ -1,14 +1,18 @@
 ---
 title: Setup GitHub actions pipeline
 date: "2021-09-07T22:40:32.169Z"
-description: We reduce the risk associated with deploying and releasing changes into production by implementing a set of practices called continuous delivery. This post talks about how to setup a GitHub actions pipeline to deploy code into Google Kubernetes Engine 
+description: If you are writing applications in kubernetes and you dont have a build process you probably get tired of rebuilding the images and rolling the deployments everytime you want to make an update. You can setup a github actions pipeline to build automate your build process and save you time. 
 ---
 
-> # Background
-_CICD Pipelines are a fundamental part of the devops process. Pipelines are responsible for unit tests, integration tests, performance tests, static code analysis, security tests/scans, building images, and deploying applications. In this post we will look into how to setup a GitHub actions pipeline to build a container based on the source code and deploy into a production environment (GKE)._
+The an article on devops.com called "The Continuous Delivery Pipeline" speaks to the importance of the CICD pipeline,it says,
+> In a traditional environment, development teams typically try to implement an entire new version in one go, addressing software quality properties (such as robustness, extensibility, maintainability) only when the project is close to completion. However, as deadlines loom and budget pressures grow, quality is often the first thing that is compromised._
 
-**Note**- GitHub Actions pipeline may not fit all usecases. For example, a lot of people prefer to host the pipeline within their clusters to be able to collect metrics and logs from the pipeline. This is likely possible through a GitHub actions pipeline but I have not looked into how to accomplish this yet.
+[source](https://devops.com/continuous-delivery-pipeline/)]
 
+Honestly, this will save you a lot of _time_ and _headaches_ in the longrun.
+   
+Typically a pipeline would have unit tests, integration tests, secruity scans,static code analysis, scale tests, penetration tests, performance tests, and probably more depending on the org and the app. In this app, we are going to keep it simple and build a pipeline to build the container and deploy the code into Google Kubernetes Engine.
+***
 
 ## Prereqs
 - a GitHub repository
