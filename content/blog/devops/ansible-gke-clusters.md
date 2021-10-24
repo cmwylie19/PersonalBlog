@@ -1,28 +1,20 @@
 ---
-title: Automate Staging Environments (Ansible)
+title: Ansible GKE Clusters
 date: "2021-10-11T22:40:32.169Z"
-description: In the world of modern cloud applications, environments are disposable, identical, easy to provision, and belong in a repository as infrastructure as code. Whether you need to spin up a cluster for a new engineer, or add a staging environment, the process should be as painless as running a script. I'm going to show you how to provision a GKE cluster from scratch using ansible.
+description: If you have read "The Devops Handbook", "Phoenix Project", "The Unicorn Project", or spent any time in the devops world then you know that you should be able to easy spin up environments automatically and consistently from scratch.
 ---
 
- # Background
-You are an SRE, responsible for the well-being of a successful finance application. 
+The Devops Collective handbook under "Operational Capabilities of a DevOps environment", it says,
+> First, and possibly foremost, you need the ability to automatically and consistently spin up environments. That's a huge deal, and it isn't easy.
+
+[source](https://devops-collective-inc.gitbook.io/devops-the-ops-perspective/operational-capabilities-of-a-devops-environment)
+
+This comes in handy when you need to spin up a quick staging environment to test code, or a kubernetes cluster for workshop participants.
    
-Clients download your application with a license and use it in their own environments. 
+Your staging environments should be largely identical for your application to ensure that production ready code goes out into the world.
    
-You have a thorough pipeline testing your application. It unit tests the code, runs integration tests, security tests/scans, has distribute tracing and logging and collects metrics at every step of the way and stores them in dashboards to make errors visible but this time, _it's not enough._
-    
-The problem is, clients are reporting that the application pods are consuming huge amounts of CPU/Memory during peak hours of usage. **You can't reproduce**.
-   
-The CTO tells you that you need of a soak clusters to match the behavior of customer environments during peak usage to figure out what is going on with the CPU/Memory.
-
-**Solution**- Be able to spin up environments that match production as easy as as it is to eat icecream on a warm summer day. 
-
-![Summer](Summer.png)
-
-
----
-_Solution_: Use ansible automation platform to spin up an Environment.
-
+In this post, we'll look into how to write an ansible playbook to spin up and destroy a GKE Cluster and Network.
+***
 ## To do list
 - Create a Repo and Scaffolding
 - Get your GKE project ID
