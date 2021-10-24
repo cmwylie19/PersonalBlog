@@ -1,26 +1,23 @@
 ---
-title: Configure Istio Access Log
+title: Configure Istio Access Log JSON
 date: "2021-08-31T22:40:32.169Z"
-description: A quick and simple way to configure access logging in istio is by editing the istio config map, this blog demonstrates how to configure the access logs via the config map and through a helm values file.
+description: A couple of ways to configure Istio access logging to log in JSON.
 ---
-![Access Logs](/access_log.png)   
-> As of writing this blog, I have not seen many straight forward answers explaining how to configure access logging in Istio which is silly as it is not a very advanced topic or even hard to do. This post will talk you through important flags to put in your access logs, and outline two straight forward approaches to configuring your access logs.
+![Access Logs](/access_log.png)  
+When you are debugging network requests, the access logs should be one of the first places that you look.
+   
+The Istio docs say that,
+> The simplest kind of Istio logging is Envoy’s access logging. Envoy proxies print access information to their standard output. The standard output of Envoy’s containers can then be printed by the kubectl logs command. 
+
+I personally prefer my logs in JSON format, makes them easier to read and parse.
+   
+In this post, we'll how at two ways to configure the Istio Access Log. 
 
 ## Contents
 - **Part 1** - Setting up the Access Log with Flags
 - **Part 2** - Configuration through ConfigMap
 - **Part 3** - Configuration through Helm values file
 
-## Importantance of Flags in the Access Logs
-Many things can go wrong on a the network. Access logs help to pinpoint, disect, and diagnose network errors that occur on your system. The access log can show:
-- remote IP address of the request
-- status codes of request
-- Flags associated with the request detailing more information
-- if ssl was used on the request
-- destination of the request
-
-and a lot more. This information is needed in making decisions on how to improve your system, like adding timeouts, retries, rate limiting, or a web application firewall.
- 
 ## Part 1 - Setting up the Access Log with Flags
 
 When we configure access logs in Istio, we are actually configuring [Envoy Access Logging](https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage).   

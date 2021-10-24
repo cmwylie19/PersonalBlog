@@ -1,11 +1,16 @@
 ---
-title: Blue/Green and Canary Deployments in Knative
+title: Knative Deployments
 date: "2020-08-05T22:40:32.169Z"
-description: Knative is a feature rich faucet of kubernetes where pods scale down to 0 if they do not receive any more requests during a designated window.
+description: Knative is great and extremely efficient. This pospts talk about how to do blue/green and canary deployments
 ---
 
+Cloudflare's website says under "Why use serverless computing",
+> Serverless computing offers a number of advantages over traditional cloud-based or server-centric infrastructure. For many developers, serverless architectures offer greater scalability, more flexibility, and quicker time to release, all at a reduced cost. With serverless architectures, developers do not need to worry about purchasing, provisioning, and managing backend servers. However, serverless computing is not a magic bullet for all web application developers.
+
+If you want to play around in it, we will look into how to do Blue/Green and canary deployments. I was using OpenShift but you can use whatever environment that you want.
+***
 # Serverless Deployments
-_In this article I am going to show you how to deploy serverless applications on OpenShift using Knative. In the tutorial I will be going over a Blue/Green and a Canary deployment of a simple node.js application. This article assumes that you already have access to a OpenShift Cluster. I am using OpenShift 4.5, if you are not using 4.5 change the file in `deploy/operator-subscription.yaml` `spec.channel` to the version of OpenShift that you are using._
+_ Let's look into how to do a Blue/Green and a Canary deployment of a simple node.js application. This article assumes that you already have access to a OpenShift Cluster. I am using OpenShift 4.5, if you are not using 4.5 change the file in `deploy/operator-subscription.yaml` `spec.channel` to the version of OpenShift that you are using._
 
 > Serverless Deployment Lab
 >- Install the kn tool

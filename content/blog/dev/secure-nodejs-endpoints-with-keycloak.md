@@ -1,5 +1,5 @@
 ---
-title: Secure endpoints with keycloak
+title: Secure NodeJS endpoints with keycloak
 date: "2020-04-28T22:40:32.169Z"
 description: Using keycloak middleware to lock down endpoints
 ---
