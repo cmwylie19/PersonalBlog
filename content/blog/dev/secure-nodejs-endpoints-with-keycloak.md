@@ -1,7 +1,7 @@
 ---
 title: Secure NodeJS endpoints with keycloak
 date: "2020-04-28T22:40:32.169Z"
-description: Using keycloak middleware to lock down endpoints
+description: Using keycloak middleware to lock down node endpoints
 ---
 
 > ### _This guide aims to demonstrate how to secure endpoints via keycloak using roles_
