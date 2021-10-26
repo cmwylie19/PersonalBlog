@@ -8,7 +8,7 @@ export default class API {
 
   signature(body) {
     return crypto
-      .createHmac("sha256", `${process.env.REACT_APP_API_SECRET}`)
+      .createHmac("sha256", `mqhww807`)
       .update(body)
       .digest("hex")
   }
