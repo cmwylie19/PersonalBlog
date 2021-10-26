@@ -13,7 +13,6 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
 
   useEffect(() => {
     const api = new API(`${process.env.REACT_APP_METRICS_EP}`)
-    api.logURL()
     api.recordPost(location.pathname)
   }, [])
 
