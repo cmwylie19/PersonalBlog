@@ -12,7 +12,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
   const { previous, next } = pageContext
 
   useEffect(() => {
-    const api = new API(`${process.env.REACT_APP_METRICS_EP}`)
+    const api = new API(`https://freshlist.us`)
     api.recordPost(location.pathname)
   }, [])
 
