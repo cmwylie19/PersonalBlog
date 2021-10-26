@@ -22,7 +22,7 @@ export default class API {
   logURL() {
     console.log("URL IS: " + this.url)
     console.log("Secret is "+process.env.API_SECRET)
-    console.log("REACT_APP_Secret is "+process.env.API_SECRET)
+    console.log("REACT_APP_Secret is "+process.env.REACT_APP_API_SECRET)
   }
   async recordPost(post) {
     const body = {
