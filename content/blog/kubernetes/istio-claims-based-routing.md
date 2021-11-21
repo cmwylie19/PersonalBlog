@@ -1,3 +1,8 @@
+---
+title: Claims Based Routing Istio 1.12
+date: "2021-11-21T22:40:32.169Z"
+description: Demo using claims based routing in Istio.
+---
 # Claims Based Routing Istio Example
 _You must use Istio 1.12 for this demo. if you do not, you will get `NR` no route errors in the access log._
 - [Setup MiniKube](#setup-minikube)
