@@ -11,4 +11,4 @@ In order to clear a file from Git History, run the following:
 git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch path_to_file" HEAD
 ```
 
-then to push to the remote repo do a `git push -all`
+then to push to the remote repo do a `git push --all`
