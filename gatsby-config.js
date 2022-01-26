@@ -8,7 +8,7 @@ module.exports = {
       name: `Casey Wylie`,
       summary: `Written by Casey Wylie, a Kubernetes Platform Architect who lives and works in Raleigh building and automating distributed systems.`,
     },
-    description: `A collection of lessons and techniques gained over years of work in the industry, intended for sharing and discussed.`,
+    description: `Tech stuff.`,
     siteUrl: `http://cmwylie19.github.io/`,
     social: {
       twitter: `cmwylie19`,

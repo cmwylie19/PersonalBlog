@@ -1,15 +1,15 @@
 import React from "react"
 import Toggle from "react-toggle"
 
-const ThemeToggle = props => (
-  <div id="theme" style={{ display: "flex", justifyContent: "center" }}>
-    {props.theme ? "Light" : "Dark"}
+const ThemeToggle = ({theme, toggleTheme}) => (
+  <div id="theme" style={{ color: theme?"inherit":"#fbfbfb",display: "flex", justifyContent: "center" }}>
+    {theme ? "Light" : "Dark"}
     <div style={{ width: "10px" }}></div>{" "}
     <Toggle
       id="toggle"
-      defaultChecked={props.theme}
+      defaultChecked={theme}
       aria-label="Toggle Theme"
-      onChange={props.toggleTheme}
+      onChange={toggleTheme}
     />
   </div>
 )

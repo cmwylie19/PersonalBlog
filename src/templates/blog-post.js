@@ -3,7 +3,7 @@ import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
-import API from "../utils/Api"
+// import API from "../utils/Api"
 import Bio from "../components/bio"
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
@@ -11,10 +11,10 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
   const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
 
-  useEffect(() => {
-    const api = new API(`https://freshlist.us`)
-    api.recordPost(location.pathname)
-  }, [])
+  // useEffect(() => {
+  //   const api = new API(`https://freshlist.us`)
+  //   api.recordPost(location.pathname)
+  // }, [])
 
   return (
     <Layout location={location} title={siteTitle}>

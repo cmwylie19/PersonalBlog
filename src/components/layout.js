@@ -61,6 +61,7 @@ const Layout = ({
       style={{
         height: "100vh",
         width: "100% !important",
+        // color: theme ? "inherit" : "black",
       }}
     >
       <div
@@ -68,7 +69,6 @@ const Layout = ({
           height: "100vh",
           width: "100% !important",
           marginLeft: `auto`,
-
           marginRight: `auto`,
           maxWidth: rhythm(24),
           padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
@@ -77,12 +77,12 @@ const Layout = ({
         <header
           style={{
             fontFamily: "Montserrat",
-            color: theme ? "inherit" : "YellowGreen",
+            color: "YellowGreen",
           }}
         >
           {header}
         </header>
-        <main>{children}</main>
+        <main style={{color: theme ? "inherit" : "#fcfcfc"}}>{children}</main>
         <footer
           style={{
             fontFamily: `'Montserrat', sans-serif`,
@@ -93,17 +93,17 @@ const Layout = ({
             padding: "20px"
           }}
         >
-          © {new Date().getFullYear()}, Built by
+          © {new Date().getFullYear()}, 
           {` `}
           <a
             target="_blank"
             rel="noopener noreferrer"
             href="https://www.linkedin.com/in/casewylie/"
           >
-            Me!
+            Casey Wylie
           </a>
         </footer>
-        {/* <ThemeButton toggleTheme={toggleTheme} theme={theme} /> */}
+        <ThemeButton toggleTheme={toggleTheme} theme={theme} />
       </div>
     </div>
   )

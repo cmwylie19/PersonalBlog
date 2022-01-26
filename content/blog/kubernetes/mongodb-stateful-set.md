@@ -148,4 +148,4 @@ MainRepSet:SECONDARY> db.local.find()
 { "_id" : ObjectId("61916cbcdd955ecc2d7531b7"), "name" : "dbot" }
 ```
 
-Good luck to all as you replicate data!  🤷
+Now go and replicate!  🤷

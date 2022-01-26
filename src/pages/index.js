@@ -9,21 +9,29 @@ const BlogIndex = ({ data, location, ...props }) => {
   const [theme, setTheme] = useState(true)
   const siteTitle = data.site.siteMetadata.title
   const posts = data.allMarkdownRemark.edges
-
+  const setStyle = () => {
+    setTheme(!theme)
+    if (theme) {
+      document.body.style="background-color: #333"
+    } else {
+      document.body.style="background-color: inherit"
+    }
+  }
   return (
+ 
     <Layout
       {...props}
       location={location}
       theme={theme}
-      toggleTheme={() => setTheme(!theme)}
+      toggleTheme={() => setStyle()}
       title={siteTitle}
     >
       <SEO title="All posts" />
-      <Bio />
+      <Bio theme={theme} />
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
-          <article key={node.fields.slug}>
+          <article key={node.fields.slug} >
             <header>
               <h3
                 style={{
@@ -34,10 +42,11 @@ const BlogIndex = ({ data, location, ...props }) => {
                   {title}
                 </Link>
               </h3>
-              <small>{node.frontmatter.date}</small>
+              <small style={{color: theme?"inherit":"#fbfbfb"}}>{node.frontmatter.date}</small>
             </header>
             <section>
               <p
+              style={{color: theme?"inherit":"#fbfbfb"}}
                 dangerouslySetInnerHTML={{
                   __html: node.frontmatter.description || node.excerpt,
                 }}
