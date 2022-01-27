@@ -6,28 +6,30 @@ import SEO from "../components/seo"
 import { rhythm } from "../utils/typography"
 
 const BlogIndex = ({ data, location, ...props }) => {
-  const [theme, setTheme] = useState(true)
+  const [dark, setdark] = useState(false)
   const siteTitle = data.site.siteMetadata.title
   const posts = data.allMarkdownRemark.edges
   const setStyle = () => {
-    setTheme(!theme)
-    if (theme) {
-      document.body.style="background-color: #333"
+    setdark(!dark)
+    
+    if (dark) {
+      document.body.style="background-color: #8a8a8a"
     } else {
       document.body.style="background-color: inherit"
     }
   }
+  React.useEffect(()=>setStyle(),[])
   return (
  
     <Layout
       {...props}
       location={location}
-      theme={theme}
+      dark={dark}
       toggleTheme={() => setStyle()}
       title={siteTitle}
     >
       <SEO title="All posts" />
-      <Bio theme={theme} />
+      <Bio dark={dark} />
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
@@ -42,11 +44,11 @@ const BlogIndex = ({ data, location, ...props }) => {
                   {title}
                 </Link>
               </h3>
-              <small style={{color: theme?"inherit":"#fbfbfb"}}>{node.frontmatter.date}</small>
+              <small style={{color: dark?"inherit":"#fbfbfb"}}>{node.frontmatter.date}</small>
             </header>
             <section>
               <p
-              style={{color: theme?"inherit":"#fbfbfb"}}
+              style={{color: dark?"inherit":"#fbfbfb"}}
                 dangerouslySetInnerHTML={{
                   __html: node.frontmatter.description || node.excerpt,
                 }}

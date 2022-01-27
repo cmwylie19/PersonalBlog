@@ -5,7 +5,7 @@ import ThemeButton from "./ThemeToggle"
 import "./style.css"
 
 const Layout = ({
-  theme,
+  dark,
   toggleTheme,
   location,
   title,
@@ -61,6 +61,7 @@ const Layout = ({
       style={{
         height: "100vh",
         width: "100% !important",
+        color: dark ? "#333" : "inherit"
         // color: theme ? "inherit" : "black",
       }}
     >
@@ -82,12 +83,11 @@ const Layout = ({
         >
           {header}
         </header>
-        <main style={{color: theme ? "inherit" : "#fcfcfc"}}>{children}</main>
+        <main style={{color: dark ? "#333" : "inherit"}}>{children}</main>
         <footer
           style={{
             fontFamily: `'Montserrat', sans-serif`,
             textAlign: "center",
-            color: theme ? "inherit" : "grey",
             justifyContent: "center",
             alignItems: "center",
             padding: "20px"
@@ -103,7 +103,7 @@ const Layout = ({
             Casey Wylie
           </a>
         </footer>
-        <ThemeButton toggleTheme={toggleTheme} theme={theme} />
+       {location.pathname == "/" && <ThemeButton toggleTheme={toggleTheme} dark={dark} /> }
       </div>
     </div>
   )
