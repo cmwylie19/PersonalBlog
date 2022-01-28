@@ -103,8 +103,8 @@ const Layout = ({
             Casey Wylie
           </a>
         </footer>
-        <ThemeButton toggleTheme={toggleTheme} dark={dark} />
-       {/* {location.pathname == "/" && <ThemeButton toggleTheme={toggleTheme} dark={dark} /> } */}
+        {/* <ThemeButton toggleTheme={toggleTheme} dark={dark} /> */}
+       {location.pathname == "/" && <ThemeButton toggleTheme={toggleTheme} dark={dark} /> }
       </div>
     </div>
   )
