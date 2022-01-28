@@ -51,6 +51,18 @@ metadata:
   name: mongo-storage
 provisioner: kubernetes.io/gce-pd
 ```
+**or**
+
+If you are running minikube
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: mongo-storage
+provisioner: k8s.io/minikube-hostpath
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+```
 
 ## Create a StatefulSet
 In a statefulSet you have to specify the `serviceName` as the headless service, and create the `volumeClaimTemplates` so that each instance will have a PersistentVolume and PersistentVolumeClaim. As seen from the command arguments on the mongo image, we need `mongod` to bind to `0.0.0.0` to listen for connections from applications on configured addresses (our headless service)
