@@ -102,11 +102,11 @@ The infrastructure is ready, now to finally initiate the `ReplicaSet` in mongo. 
 k exec pod/mongo-0 -- mongo --eval 'rs.initiate({ 
 _id: "MainRepSet",
 members: [
-    { _id: 0, host: "mongo-0.mongo-headless.demo.svc.cluster.local:27017"
+    { _id: 0, host: "mongo-0.mongo-headless.default.svc.cluster.local:27017"
     },
-    { _id: 1, host: "mongo-1.mongo-headless.demo.svc.cluster.local:27017"
+    { _id: 1, host: "mongo-1.mongo-headless.default.svc.cluster.local:27017"
     },
-    { _id: 2, host: "mongo-2.mongo-headless.demo.svc.cluster.local:27017"
+    { _id: 2, host: "mongo-2.mongo-headless.default.svc.cluster.local:27017"
     }]
 })'
 ```
@@ -138,7 +138,7 @@ You should have received the output above.
 do the same on mong-2, the other slave:   
 Exec into the pod
 ```
-k exec -it mongo-1 -- mongo
+k exec -it mongo-2 -- mongo
 ```
 
 From the mongo shell, issue `rs.secondaryOk()`, then `db.local.find()` to select all from local db:
