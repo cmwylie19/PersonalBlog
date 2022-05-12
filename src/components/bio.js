@@ -45,12 +45,12 @@ const Bio = ({dark}) => {
         style={{
           marginRight: rhythm(1 / 2),
           marginBottom: 0,
-          maxWidth: 50,
-          height:50,
-          borderRadius: `15px`
+          maxWidth: 90,
+          height:80,
+          // borderRadius: `15px`
         }}
         imgStyle={{
-          borderRadius: `50%`,
+          borderRadius: `30%`,
         }}
       />
        {author.summary}
