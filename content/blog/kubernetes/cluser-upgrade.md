@@ -54,7 +54,7 @@ kubeadm upgrade apply v.1.23.0
 
 **Always** drain the node before updating kubelet.. next upgrade the node and restart kubelet
 ```
-k drain node01 --force --grace-period=0 --ignore-daemonsets
+k drain node01 --force --grace-period=0 --ignore-daemonsets --delete-emptydir-data
 kubeadm upgrade node
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
@@ -111,7 +111,7 @@ k taint no controlplane node-role.kubernetes.io/master-
 
 Drain worker node:
 ```
-k drain node01 --force --grace-period=0 --ignore-daemonsets
+k drain node01 --force --grace-period=0 --ignore-daemonsets --delete-emptydir-data
 ```
 
 Upgrade `kubeadm`,`kubectl`, and `kubelet`
