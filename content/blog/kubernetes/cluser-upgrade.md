@@ -1,7 +1,7 @@
 ---
 title: Cluster Upgrade Process
 date: "2022-05-15T16:42:32.169Z"
-description: Upgrading my Kubernetes cluster.
+description: Upgrading my Kubernetes cluster and live video. Kubernetes 1.22 -> 1.23
 ---
 
 ## Kubernetes Upgrade
