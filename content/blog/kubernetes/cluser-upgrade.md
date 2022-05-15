@@ -49,13 +49,13 @@ apt-get install -y kubeadm=1.23.0-00 kubelet=1.23.0-00 kubectl=1.23.0-00
 ```
 Next, run `kubeadm upgrade apply` to pull the images and upgrade the components.
 ```
-kubeadm upgrade apply v.1.23.0
+sudo kubeadm upgrade apply v1.23.0
 ```
 
 **Always** drain the node before updating kubelet.. next upgrade the node and restart kubelet
 ```
 k drain node01 --force --grace-period=0 --ignore-daemonsets --delete-emptydir-data
-kubeadm upgrade node
+sudo kubeadm upgrade node
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 ```
@@ -121,7 +121,7 @@ sudo apt-get install -y kubeadm=1.23.0-00 kubectl=1.23.0-00 kubelet=1.23.0-00
 
 Upgrade Node Configuration
 ```
-kubeadm upgrade node
+sudo kubeadm upgrade node
 ```
 
 Restart kubelet service
@@ -146,5 +146,5 @@ sudo apt-mark hold kubeadm kubelet kubectl
 ```
 
 ### Video
-[![Video](https://i9.ytimg.com/vi/3xsznTndXfU/mq2.jpg?sqp=CPDAhZQG&rs=AOn4CLC5G8UVg7IXAjQHi72ZASDPKYxcJA)](https://youtu.be/3xsznTndXfU)   
-Watch the [video](https://youtu.be/3xsznTndXfU)
+[![Live Kubernetes Upgrade](https://i9.ytimg.com/vi/3xsznTndXfU/mq2.jpg?sqp=CPDAhZQG&rs=AOn4CLC5G8UVg7IXAjQHi72ZASDPKYxcJA)](https://youtu.be/3xsznTndXfU)   
+Watch the [Live Kubernetes Upgrade](https://youtu.be/3xsznTndXfU)
