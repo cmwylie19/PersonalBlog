@@ -6,7 +6,7 @@ module.exports = {
     title: `Casey Wylie`,
     author: {
       name: `Casey Wylie`,
-      summary: `Written by Casey Wylie, a Kubernetes Platform Architect who lives and works in Raleigh building and automating distributed systems.`,
+      summary: `Written by Casey Wylie, a Software Engineer/Architect in Raleigh NC, working on distributed systems in the hybrid cloud.`,
     },
     description: `Tech stuff.`,
     siteUrl: `http://cmwylie19.github.io/`,
