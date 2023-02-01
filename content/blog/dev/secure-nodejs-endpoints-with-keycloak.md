@@ -1,12 +1,12 @@
 ---
-title: Secure NodeJS endpoints with keycloak
+title: Secure NodeJS endpoints with Keycloak
 date: "2020-04-28T22:40:32.169Z"
-description: Using keycloak middleware to lock down node endpoints
+description: Securing REST endpoints provides benefits such as confidentiality of sensitive data, data integrity, user authentication, authorization, improved performance, and compliance with privacy regulations.
 ---
 
-> ### _This guide aims to demonstrate how to secure endpoints via keycloak using roles_
+> ### _Quick and dirty: How to secure endpoints via keycloak using roles_
 
-This was written using node and typescript, if you are using regular javascript just drop the types.
+This was written using node and TypeScript, if you are using regular JavaScript; just drop the types.
 
 _Keycloak middleware can be used to secure backend endpoints to ensure that only users with the correct roles are able to access them_
 

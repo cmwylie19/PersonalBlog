@@ -1,7 +1,7 @@
 ---
 title: Claims Based Routing Istio 1.12
 date: "2021-11-21T22:40:32.169Z"
-description: Demo using claims based routing in Istio.
+description: Claims-based routing in Istio is a feature that enables administrators to control and direct network traffic based on user-defined claims. This allows for a more granular control of traffic, making it possible to implement advanced traffic management strategies such as A/B testing, canary deployments, or blue/green deployments
 ---
 # Claims Based Routing Istio Example
 _You must use Istio 1.12 for this demo. if you do not, you will get `NR` no route errors in the access log._

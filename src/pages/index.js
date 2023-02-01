@@ -44,7 +44,7 @@ const BlogIndex = ({ data, location, ...props }) => {
                   {title}
                 </Link>
               </h3>
-              <small style={{color: dark?"inherit":"#fbfbfb"}}>{node.frontmatter.date}</small>
+              <small style={{fontWeight: 750,color: dark?"inherit":"#fbfbfb"}}>{node.frontmatter.date}</small>
             </header>
             <section>
               <p

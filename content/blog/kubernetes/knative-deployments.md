@@ -1,7 +1,7 @@
 ---
-title: Knative Deployments
+title: Knative Blue/Green and Canary Deployments
 date: "2020-08-05T22:40:32.169Z"
-description: Knative is great and extremely efficient. This pospts talk about how to do blue/green and canary deployments
+description: Knative is a good choice for application development and deployment because it provides a set of middleware components that abstract the underlying infrastructure, making it easier to build, deploy, and manage modern, cloud-native applications.
 ---
 
 Cloudflare's website says under "Why use serverless computing",

@@ -1,7 +1,7 @@
 ---
 title: ETCD Encryption 
 date: "2022-07-12T16:42:32.169Z"
-description: Encrypting ETCD in Kubernetes
+description: Encrypting etcd and secrets at rest is important because it provides protection against unauthorized access to sensitive data, such as passwords, certificates, and other confidential information. When stored in an unencrypted format, etcd and secrets can be easily compromised if the disk or storage device they are stored on is lost or stolen. Encryption helps prevent this by converting sensitive data into an unreadable format that can only be decrypted with the proper keys or credentials.
 ---
 
 # ETCD Encryption

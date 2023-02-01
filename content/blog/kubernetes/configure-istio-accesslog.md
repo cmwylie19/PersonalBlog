@@ -1,7 +1,7 @@
 ---
 title: Configure Istio Access Log JSON
 date: "2021-08-31T22:40:32.169Z"
-description: A couple of ways to configure Istio access logging to log in JSON.
+description: Configuring access logs in JSON format is easier than traditional log formats such as plain text because of its structured and machine-readable nature. JSON logs are easy to parse and extract specific data, making them well-suited for integration with other logging tools and services. Additionally, JSON logs can be easily scaled and distributed across multiple systems, allowing for better management and analysis of log data. Furthermore, JSON logs are flexible and can be extended to include additional fields as needed, providing a consistent format for log data and ensuring compatibility across different systems and tools. Overall, JSON format provides a more efficient, scalable, and flexible approach to logging.
 ---
 ![Access Logs](/access_log.png)  
 When you are debugging network requests, the access logs should be one of the first places that you look.

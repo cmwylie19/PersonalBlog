@@ -1,7 +1,7 @@
 ---
 title: System Hardening with App Armor
 date: "2022-05-28T16:42:32.169Z"
-description: App Armor custom profile demo 
+description: Creating an AppArmor profile is the process of defining a set of rules and restrictions for a specific application or process, with the goal of enhancing security and reducing the attack surface of the system. 
 ---
 
 # Cluster Hardening
