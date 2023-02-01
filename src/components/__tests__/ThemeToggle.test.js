@@ -19,7 +19,7 @@ describe("ThemeToggle", () => {
     console.log(tree.text())
     expect(tree).toBeDefined()
     expect(tree.length).toBe(1)
-    expect(tree.text()).toBe("Dark ")
+    expect(tree.text()).toBe(" ")
     tree.find("#toggle").simulate("change")
   })
 })

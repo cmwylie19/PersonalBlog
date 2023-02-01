@@ -51,7 +51,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git@github.com:cmwylie19/BligBlogger.git"
+    "url": "git@github.com:cmwylie19/PersonalBlog.git"
   },
   "scripts": {
     "build": "gatsby build",

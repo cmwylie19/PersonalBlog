@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`404 renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "color": "inherit",
+      "height": "100vh",
+      "width": "100% !important",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "height": "100vh",
+        "marginLeft": "auto",
+        "marginRight": "auto",
+        "maxWidth": "42rem",
+        "padding": "2.625rem 1.3125rem",
+        "width": "100% !important",
+      }
+    }
+  >
+    <header
+      style={
+        Object {
+          "color": "YellowGreen",
+          "fontFamily": "Montserrat",
+        }
+      }
+    >
+      <h2
+        style={
+          Object {
+            "fontFamily": "'Montserrat', sans-serif",
+            "marginTop": 0,
+          }
+        }
+      >
+        <a
+          href="/"
+          style={
+            Object {
+              "boxShadow": "none",
+              "color": "inherit",
+            }
+          }
+        >
+          test
+        </a>
+      </h2>
+    </header>
+    <main
+      style={
+        Object {
+          "color": "inherit",
+        }
+      }
+    >
+      <h1>
+        Not Found
+      </h1>
+      <p>
+        You just hit a route that doesn't exist.
+      </p>
+    </main>
+    <footer
+      style={
+        Object {
+          "alignItems": "center",
+          "fontFamily": "'Montserrat', sans-serif",
+          "justifyContent": "center",
+          "padding": "20px",
+          "textAlign": "center",
+        }
+      }
+    >
+      © 
+      2023
+      ,
+       
+      <a
+        href="https://www.linkedin.com/in/casewylie/"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Casey Wylie
+      </a>
+    </footer>
+  </div>
+</div>
+`;
