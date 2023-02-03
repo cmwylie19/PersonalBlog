@@ -27,9 +27,7 @@ describe("404", () => {
     }
   })
 
-  it("renders without crashing", () => {
-    mount(<NotFoundPage data={data} location="/" />)
-  })
+
   it("renders correctly", () => {
     const tree = renderer
       .create(<NotFoundPage data={data} location="/" />)
