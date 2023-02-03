@@ -36,6 +36,8 @@ build/Release
 node_modules/
 jspm_packages/
 
+content/blog/kubernetes/envoy-gateway.md
+content/blog/kubernetes/expose-metrics-from-nginx.md
 # Typescript v1 declaration files
 typings/
 
